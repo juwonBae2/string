@@ -84,7 +84,7 @@ public:
     // operator ==
     bool operator==(const String &other) const
     {
-        return (strcmp(data, other.data) == 0);
+        return (strcmp(this->data, other.data) == 0);
     }
 
     // operator <
