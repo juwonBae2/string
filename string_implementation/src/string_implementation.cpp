@@ -3,6 +3,8 @@
 int main()
 {
     String str1 = "Hello";
+    std::cout << "Concatenated string(str1): " << str1 << std::endl;
+
     String str2 = "World";
 
     String str3 = str1 + str2;
