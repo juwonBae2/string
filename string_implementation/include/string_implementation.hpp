@@ -80,6 +80,7 @@ public:
         return *this;
     }
 
+    // operator엔 웬만하면 this를 넣어줘야 됨 (명시적) 
     // operator ==
     bool operator==(const String &other) const
     {
