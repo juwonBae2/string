@@ -1,66 +1,104 @@
 #include "string_implementation.hpp"
 
-int main()
+String::String() : data(nullptr) {}
+
+String::String(const char *str)
 {
-    String str1 = "Hello";
-    std::cout << "Concatenated string(str1): " << str1 << std::endl;
-
-    String str2 = "World";
-
-    String str3 = str1 + str2;
-    std::cout << "Concatenated string: " << str3 << std::endl;
-
-    if (str1 == str2)
+    if (str != nullptr)
     {
-        std::cout << "str1 and str2 are equal." << std::endl;
+        data = new char[strlen(str) + 1];
+        strcpy(data, str);
     }
-    else if (str1 < str2)
+    else
     {
-        std::cout << "str1 is less than str2." << std::endl;
+        data = nullptr;
     }
-    else if (str1 > str2)
-    {
-        std::cout << "str1 is greater than str2." << std::endl;
-    }
-
-    return 0;
 }
 
-// 얕은 복사 vs 깊은 복사
-// #include <iostream>
-// class MyClass
-// {
-// public:
-//     int *data;
+String::~String()
+{
+    delete[] data;
+}
 
-//     MyClass(int value)
-//     {
-//         data = new int(value);
-//     }
+String::String(const String &other)
+{
+    if (other.data != nullptr)
+    {
+        data = new char[strlen(other.data) + 1];
+        strcpy(data, other.data);
+    }
+    else
+    {
+        data = nullptr;
+    }
+}
 
-//     // 복사 생성자를 정의하여 깊은 복사를 수행
-//     MyClass(const MyClass &other)
-//     {
-//         data = new int(*(other.data));
-//     }
+String::String(String &&other) noexcept
+{
+    data = other.data;
+    other.data = nullptr;
+}
 
-//     ~MyClass()
-//     {
-//         delete data;
-//     }
-// };
+String &String::operator=(const String &other)
+{
+    if (this != &other)
+    {
+        delete[] data;
+        if (other.data != nullptr)
+        {
+            data = new char[strlen(other.data) + 1];
+            strcpy(data, other.data);
+        }
+        else
+        {
+            data = nullptr;
+        }
+    }
+    return *this;
+}
 
-// int main()
-// {
-//     MyClass obj1(10);
-//     MyClass obj2 = obj1; // 깊은 복사가 발생
+String &String::operator=(String &&other) noexcept
+{
+    if (this != &other)
+    {
+        delete[] data;
+        data = other.data;
+        other.data = nullptr;
+    }
+    return *this;
+}
 
-//     // obj1과 obj2는 서로 다른 메모리를 가리킴
-//     *(obj1.data) = 20;
+bool String::operator==(const String &other) const
+{
+    return (strcmp(this->data, other.data) == 0);
+}
 
-//     std::cout << *(obj2.data) << std::endl; // 출력 결과: 10
+bool String::operator<(const String &other) const
+{
+    return (strcmp(data, other.data) < 0);
+}
 
-//     std::cout << *(obj1.data) << std::endl; // 출력 결과: 10
+bool String::operator>(const String &other) const
+{
+    return (strcmp(data, other.data) > 0);
+}
 
-//     return 0;
-// }
+String String::operator+(const String &other) const
+{
+    size_t totalLen = strlen(data) + strlen(other.data);
+    char *temp = new char[totalLen + 1];
+    strcpy(temp, data);
+    strcat(temp, other.data);
+    String result(temp);
+    delete[] temp;
+    return result;
+}
+
+std::ostream &operator<<(std::ostream &os, const String &str)
+{
+    if (str.data != nullptr)
+    {
+        os << str.data;
+    }
+    return os;
+}
