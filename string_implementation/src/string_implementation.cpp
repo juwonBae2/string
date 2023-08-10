@@ -4,15 +4,7 @@ String::String() : data(nullptr) {}
 
 String::String(const char *str)
 {
-    if (str != nullptr)
-    {
-        data = new char[strlen(str) + 1];
-        strcpy(data, str);
-    }
-    else
-    {
-        data = nullptr;
-    }
+    initializeFromString(str);
 }
 
 String::~String()
@@ -22,15 +14,7 @@ String::~String()
 
 String::String(const String &other)
 {
-    if (other.data != nullptr)
-    {
-        data = new char[strlen(other.data) + 1];
-        strcpy(data, other.data);
-    }
-    else
-    {
-        data = nullptr;
-    }
+    initializeFromOther(other);
 }
 
 String::String(String &&other) noexcept
@@ -44,15 +28,7 @@ String &String::operator=(const String &other)
     if (this != &other)
     {
         delete[] data;
-        if (other.data != nullptr)
-        {
-            data = new char[strlen(other.data) + 1];
-            strcpy(data, other.data);
-        }
-        else
-        {
-            data = nullptr;
-        }
+        initializeFromOther(other);
     }
     return *this;
 }
@@ -101,4 +77,30 @@ std::ostream &operator<<(std::ostream &os, const String &str)
         os << str.data;
     }
     return os;
+}
+
+void String::initializeFromString(const char *str)
+{
+    if (str != nullptr)
+    {
+        data = new char[strlen(str) + 1];
+        strcpy(data, str);
+    }
+    else
+    {
+        data = nullptr;
+    }
+}
+
+void String::initializeFromOther(const String &other)
+{
+    if (other.data != nullptr)
+    {
+        data = new char[strlen(other.data) + 1];
+        strcpy(data, other.data);
+    }
+    else
+    {
+        data = nullptr;
+    }
 }

@@ -5,9 +5,6 @@
 
 class String
 {
-private:
-    char *data;
-
 public:
     String();
     String(const char *str);
@@ -26,4 +23,10 @@ public:
     String operator+(const String &other) const;
 
     friend std::ostream &operator<<(std::ostream &os, const String &str);
+
+private:
+    char *data;
+
+    void initializeFromString(const char *str);
+    void initializeFromOther(const String &other);
 };
