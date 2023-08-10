@@ -9,7 +9,10 @@ String::String(const char *str)
 
 String::~String()
 {
-    delete[] data;
+    if (this->data != nullptr)
+    {
+        delete[] this->data;
+    }
 }
 
 String::String(const String &other)
@@ -19,7 +22,7 @@ String::String(const String &other)
 
 String::String(String &&other) noexcept
 {
-    data = other.data;
+    this->data = other.data;
     other.data = nullptr;
 }
 
@@ -51,17 +54,17 @@ bool String::operator==(const String &other) const
 
 bool String::operator<(const String &other) const
 {
-    return (strcmp(data, other.data) < 0);
+    return (strcmp(this->data, other.data) < 0);
 }
 
 bool String::operator>(const String &other) const
 {
-    return (strcmp(data, other.data) > 0);
+    return (strcmp(this->data, other.data) > 0);
 }
 
 String String::operator+(const String &other) const
 {
-    size_t totalLen = strlen(data) + strlen(other.data);
+    size_t totalLen = strlen(this->data) + strlen(other.data);
     char *temp = new char[totalLen + 1];
     strcpy(temp, data);
     strcat(temp, other.data);
@@ -83,12 +86,12 @@ void String::initializeFromString(const char *str)
 {
     if (str != nullptr)
     {
-        data = new char[strlen(str) + 1];
+        this->data = new char[strlen(str) + 1];
         strcpy(data, str);
     }
     else
     {
-        data = nullptr;
+        this->data = nullptr;
     }
 }
 
@@ -96,11 +99,11 @@ void String::initializeFromOther(const String &other)
 {
     if (other.data != nullptr)
     {
-        data = new char[strlen(other.data) + 1];
+        this->data = new char[strlen(other.data) + 1];
         strcpy(data, other.data);
     }
     else
     {
-        data = nullptr;
+        this->data = nullptr;
     }
 }

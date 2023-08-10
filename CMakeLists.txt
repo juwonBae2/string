@@ -10,13 +10,6 @@ else()
   message(STATUS "CCache Not Found")
 endif()
 
-# CMAKE_BUILD_TYPE 관련 옵션은 g++ 기본 설정을 따름
-# Default: None
-# Debug: -g (본 프로젝트의 기본 옵션)
-# Release -O3 DNDEBUG
-# MinSizeRel: -Os DNDEBUG
-# RelWithDebInfo: -O2 -g DNDEBUG
-
 # 모듈 패스 설정
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/module" ${CMAKE_MODULE_PATH})
 message(STATUS "${CMAKE_MODULE_PATH}")
@@ -38,37 +31,6 @@ message(STATUS "CMAKE_CXX_COMPILER_VERSION: ${CMAKE_CXX_COMPILER_VERSION}")
 if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 1.0.0)
   set(CMAKE_CXX_COMPILER_VERSION "5.3.1")
   message(STATUS "Detected alternative compiler. Fixing version to ${CMAKE_CXX_COMPILER_VERSION}, which is minimum requirement")
-endif()
-
-# 메인 프로젝트일 때만 다음을 수행
-# 컴파일 옵션 등, 의존성에도 적용될 수 있는 설정만 할 것
-if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-  # 이곳에서 메인 프로젝트일때 한정 옵션 변수 설정
-  set(CMAKE_CXX_STANDARD 14 CACHE STRING "The C++ standard to use")
-  set(CMAKE_C_STANDARD 11 CACHE STRING "The C standard to use")
-  set(CMAKE_CXX_STANDARD_REQUIRED ON)
-  set(CMAKE_CXX_EXTENSIONS OFF) # -std=c++xx를 사용 (-std=g++xx 대신)
-
-  # 기본 빌드 타입 설정 (설정되어 있지 않은 경우 Debug로 빌드)
-  set(default_build_type "Debug")
-  if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
-    message(STATUS "Setting build type to '${default_build_type}' as none was specified.")
-    set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE
-        STRING "Choose the type of build." FORCE)
-    # Set the possible values of build type for cmake-gui
-    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
-      "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
-  endif()
-
-  if(${CMAKE_BUILD_TYPE} MATCHES "[Dd]ebug")
-    ADD_DEFINITIONS(-DDEBUG)
-  endif()
-
-  message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
-  message(STATUS "CMAKE_CONFIGURATION_TYPES: ${CMAKE_CONFIGURATION_TYPES}")
-
-  # IDE에서 folder 지원
-  set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 endif()
 
 ##################
@@ -150,8 +112,6 @@ if(NOT sfml_POPULATED)
   FetchContent_Populate(sfml)
   add_subdirectory(${sfml_SOURCE_DIR} ${sfml_BINARY_DIR} EXCLUDE_FROM_ALL)
 endif()
-
-
 #####################
 # 의존성 가져오기 끝 #
 #####################
@@ -189,3 +149,4 @@ endfunction()
 
 # add subdirectories
 add_subdirectory_with_static_analysis(string_implementation)
+add_subdirectory_with_static_analysis(string_test)
