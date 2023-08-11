@@ -8,7 +8,8 @@ target_link_libraries(${PROJECT_NAME}
     PRIVATE
         spdlog::spdlog
         string_implementation
-)
+        gtest
+    )
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC
