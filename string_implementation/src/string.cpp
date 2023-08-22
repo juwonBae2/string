@@ -15,70 +15,70 @@ String::~String()
     }
 }
 
-String::String(const String &other)
+String::String(const String &str)
 {
-    initializeFromOther(other);
+    initializeFromOther(str);
 }
 
-String::String(String &&other) noexcept
+String::String(String &&str) noexcept
 {
-    this->data_ = other.data_;
-    other.data_ = nullptr;
+    this->data_ = str.data_;
+    str.data_ = nullptr;
 }
 
-String &String::operator=(const String &other)
+String &String::operator=(const String &str)
 {
-    if (this != &other)
+    if (this != &str)
     {
         delete[] data_;
-        initializeFromOther(other);
+        initializeFromOther(str);
     }
     return *this;
 }
 
-String &String::operator=(String &&other) noexcept
+String &String::operator=(String &&str) noexcept
 {
-    if (this != &other)
+    if (this != &str)
     {
         delete[] data_;
-        data_ = other.data_;
-        other.data_ = nullptr;
+        data_ = str.data_;
+        str.data_ = nullptr;
     }
     return *this;
 }
 
-bool String::operator==(const String &other) const
+bool String::operator==(const String &str) const
 {
-    return (strcmp(this->data_, other.data_) == 0);
+    return (strcmp(this->data_, str.data_) == 0);
 }
 
-bool String::operator!=(const String &other) const
+bool String::operator!=(const String &str) const
 {
-    return !(strcmp(this->data_, other.data_) == 0);
+    return !(strcmp(this->data_, str.data_) == 0);
 }
 
-bool String::operator<(const String &other) const
+bool String::operator<(const String &str) const
 {
-    return (strcmp(this->data_, other.data_) < 0);
+    return (strcmp(this->data_, str.data_) < 0);
 }
 
-bool String::operator>(const String &other) const
+bool String::operator>(const String &str) const
 {
-    return (strcmp(this->data_, other.data_) > 0);
+    return (strcmp(this->data_, str.data_) > 0);
 }
 
-String String::operator+(const String &other) const
+String String::operator+(const String &str) const
 {
-    size_t totalLen = strlen(this->data_) + strlen(other.data_);
+    size_t totalLen = strlen(this->data_) + strlen(str.data_);
     char *temp = new char[totalLen + 1];
     strcpy(temp, data_);
-    strcat(temp, other.data_);
+    strcat(temp, str.data_);
     String result(temp);
     delete[] temp;
     return result;
 }
 
-String String::trim() const
+String String::trim(const String &str) const
 {
     return 0;
 }
@@ -105,12 +105,12 @@ void String::initializeFromString(const char *str)
     }
 }
 
-void String::initializeFromOther(const String &other)
+void String::initializeFromOther(const String &str)
 {
-    if (other.data_ != nullptr)
+    if (str.data_ != nullptr)
     {
-        this->data_ = new char[strlen(other.data_) + 1];
-        strcpy(data_, other.data_);
+        this->data_ = new char[strlen(str.data_) + 1];
+        strcpy(data_, str.data_);
     }
     else
     {
