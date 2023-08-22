@@ -1,7 +1,7 @@
 project(string_implementation)
 
 add_library(${PROJECT_NAME}
-    src/string_implementation.cpp
+    src/string.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}

@@ -1,4 +1,4 @@
-#include "string_implementation.hpp"
+#include "string.hpp"
 
 String::String() : data_(nullptr) {}
 
@@ -76,6 +76,11 @@ String String::operator+(const String &other) const
     String result(temp);
     delete[] temp;
     return result;
+}
+
+String String::trim() const
+{
+    return 0;
 }
 
 std::ostream &operator<<(std::ostream &os, const String &str)
