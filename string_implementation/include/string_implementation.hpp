@@ -17,6 +17,7 @@ public:
     String &operator=(String &&other) noexcept;
 
     bool operator==(const String &other) const;
+    bool operator!=(const String &other) const;
     bool operator<(const String &other) const;
     bool operator>(const String &other) const;
 

@@ -1,6 +1,9 @@
 # 요구 CMake 최소 버전. 제일 위에 선언
 cmake_minimum_required(VERSION 3.22)
 
+# Set the C++ standard to C++11
+set(CMAKE_CXX_STANDARD 11)
+
 # 빌드 속도 향상을 위해 ccache 도입
 find_program(CCACHE_PROGRAM ccache)
 if(CCACHE_PROGRAM)

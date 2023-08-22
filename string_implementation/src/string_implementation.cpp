@@ -52,6 +52,11 @@ bool String::operator==(const String &other) const
     return (strcmp(this->data, other.data) == 0);
 }
 
+bool String::operator!=(const String &other) const
+{
+    return !(strcmp(this->data, other.data) == 0);
+}
+
 bool String::operator<(const String &other) const
 {
     return (strcmp(this->data, other.data) < 0);
