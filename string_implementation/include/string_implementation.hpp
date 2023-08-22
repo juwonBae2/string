@@ -26,7 +26,7 @@ public:
     friend std::ostream &operator<<(std::ostream &os, const String &str);
 
 private:
-    char *data;
+    char *data_;
 
     void initializeFromString(const char *str);
     void initializeFromOther(const String &other);

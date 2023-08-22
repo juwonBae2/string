@@ -37,6 +37,7 @@ TEST_F(StringTest, Operator2)
 
 TEST_F(StringTest, Operator3)
 {
+    // TODO: 에러 코드 return하도록 추가
     String str1 = "Hello";
     String str2 = "World";
     ASSERT_FALSE(str1 == str2);

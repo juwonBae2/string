@@ -1,6 +1,6 @@
 #include "string_implementation.hpp"
 
-String::String() : data(nullptr) {}
+String::String() : data_(nullptr) {}
 
 String::String(const char *str)
 {
@@ -9,9 +9,9 @@ String::String(const char *str)
 
 String::~String()
 {
-    if (this->data != nullptr)
+    if (this->data_ != nullptr)
     {
-        delete[] this->data;
+        delete[] this->data_;
     }
 }
 
@@ -22,15 +22,15 @@ String::String(const String &other)
 
 String::String(String &&other) noexcept
 {
-    this->data = other.data;
-    other.data = nullptr;
+    this->data_ = other.data_;
+    other.data_ = nullptr;
 }
 
 String &String::operator=(const String &other)
 {
     if (this != &other)
     {
-        delete[] data;
+        delete[] data_;
         initializeFromOther(other);
     }
     return *this;
@@ -40,39 +40,39 @@ String &String::operator=(String &&other) noexcept
 {
     if (this != &other)
     {
-        delete[] data;
-        data = other.data;
-        other.data = nullptr;
+        delete[] data_;
+        data_ = other.data_;
+        other.data_ = nullptr;
     }
     return *this;
 }
 
 bool String::operator==(const String &other) const
 {
-    return (strcmp(this->data, other.data) == 0);
+    return (strcmp(this->data_, other.data_) == 0);
 }
 
 bool String::operator!=(const String &other) const
 {
-    return !(strcmp(this->data, other.data) == 0);
+    return !(strcmp(this->data_, other.data_) == 0);
 }
 
 bool String::operator<(const String &other) const
 {
-    return (strcmp(this->data, other.data) < 0);
+    return (strcmp(this->data_, other.data_) < 0);
 }
 
 bool String::operator>(const String &other) const
 {
-    return (strcmp(this->data, other.data) > 0);
+    return (strcmp(this->data_, other.data_) > 0);
 }
 
 String String::operator+(const String &other) const
 {
-    size_t totalLen = strlen(this->data) + strlen(other.data);
+    size_t totalLen = strlen(this->data_) + strlen(other.data_);
     char *temp = new char[totalLen + 1];
-    strcpy(temp, data);
-    strcat(temp, other.data);
+    strcpy(temp, data_);
+    strcat(temp, other.data_);
     String result(temp);
     delete[] temp;
     return result;
@@ -80,9 +80,9 @@ String String::operator+(const String &other) const
 
 std::ostream &operator<<(std::ostream &os, const String &str)
 {
-    if (str.data != nullptr)
+    if (str.data_ != nullptr)
     {
-        os << str.data;
+        os << str.data_;
     }
     return os;
 }
@@ -91,24 +91,24 @@ void String::initializeFromString(const char *str)
 {
     if (str != nullptr)
     {
-        this->data = new char[strlen(str) + 1];
-        strcpy(data, str);
+        this->data_ = new char[strlen(str) + 1];
+        strcpy(data_, str);
     }
     else
     {
-        this->data = nullptr;
+        this->data_ = nullptr;
     }
 }
 
 void String::initializeFromOther(const String &other)
 {
-    if (other.data != nullptr)
+    if (other.data_ != nullptr)
     {
-        this->data = new char[strlen(other.data) + 1];
-        strcpy(data, other.data);
+        this->data_ = new char[strlen(other.data_) + 1];
+        strcpy(data_, other.data_);
     }
     else
     {
-        this->data = nullptr;
+        this->data_ = nullptr;
     }
 }
