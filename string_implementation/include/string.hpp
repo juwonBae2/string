@@ -36,8 +36,9 @@ public:
     // 특정 문자열 제거 할 수 있는 함수
     // https://nomad-learner.github.io/study/2021/02/23/anagram%EB%A7%8C%EB%93%A4%EA%B8%B02.html
     String erase() const;
-
-    // TODO: namespace로 iterator 구현
+    // 특정 문자열을 찾을수 있도록 하는 함수
+    String find(const String &str) const;
+    // TODO: namespace iterator 구현
     // ex) String::iterator
 
     friend std::ostream &operator<<(std::ostream &os, const String &str);
