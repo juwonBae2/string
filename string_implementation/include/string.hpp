@@ -47,5 +47,5 @@ private:
     char *data_;
 
     void initializeFromString(const char *str);
-    void initializeFromOther(const String &str);
+    void initializeFromOther(const String &Other);
 };

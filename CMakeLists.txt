@@ -153,3 +153,4 @@ endfunction()
 # add subdirectories
 add_subdirectory_with_static_analysis(string_implementation)
 add_subdirectory_with_static_analysis(string_test)
+add_subdirectory_with_static_analysis(console_style)

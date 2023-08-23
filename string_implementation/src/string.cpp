@@ -78,6 +78,27 @@ String String::operator+(const String &str) const
     return result;
 }
 
+String String::front() const
+{
+    if (data_ != nullptr && data_[0] != '\0')
+    {
+        char frontChar[2] = {data_[0], '\0'};
+        return String(frontChar);
+    }
+    return String();
+}
+
+String String::back() const
+{
+    if (data_ != nullptr && data_[0] != '\n')
+    {
+        size_t stringLength = strlen(data_);
+        char backChar[2] = {data_[stringLength - 1], '\0'};
+        return String(backChar);
+    }
+    return String();
+}
+
 String String::trim(const String &str) const
 {
     return 0;
@@ -105,12 +126,12 @@ void String::initializeFromString(const char *str)
     }
 }
 
-void String::initializeFromOther(const String &str)
+void String::initializeFromOther(const String &Other)
 {
-    if (str.data_ != nullptr)
+    if (Other.data_ != nullptr)
     {
-        this->data_ = new char[strlen(str.data_) + 1];
-        strcpy(data_, str.data_);
+        this->data_ = new char[strlen(Other.data_) + 1];
+        strcpy(data_, Other.data_);
     }
     else
     {

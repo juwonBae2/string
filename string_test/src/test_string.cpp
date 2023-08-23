@@ -1,5 +1,16 @@
 #include "string.hpp"
+// TODO: Console style 아직 정용 x
+// #include "console_style.hpp"
+
+#include <spdlog/spdlog.h>
+#include <spdlog/fmt/ostr.h>
 #include <gtest/gtest.h>
+
+#define PRINTLN(...)          \
+    std::cout << "\033[1;4m"; \
+    fmt::print(__VA_ARGS__);  \
+    std::cout << "\033[0m\n";
+
 class StringTest : public ::testing::Test
 {
 protected:
@@ -21,21 +32,21 @@ TEST_F(StringTest, Concatenation)
     ASSERT_EQ(String("HelloWorld"), str3);
 }
 
-TEST_F(StringTest, Operator)
+TEST_F(StringTest, ComparisonLessThan)
 {
     String str1 = "A";
     String str2 = "a";
     ASSERT_TRUE(str1 < str2);
 }
 
-TEST_F(StringTest, Operator2)
+TEST_F(StringTest, ComparisonNotGreaterThan)
 {
     String str1 = "Hello";
     String str2 = "World";
     ASSERT_FALSE(str1 > str2);
 }
 
-TEST_F(StringTest, Operator3)
+TEST_F(StringTest, ComparisonEqualityAndInequality)
 {
     // TODO: 에러 코드 return하도록 추가
     String str1 = "Hello";
@@ -47,11 +58,29 @@ TEST_F(StringTest, Operator3)
     ASSERT_TRUE(str_eq1 == str_eq2);
 }
 
-TEST_F(StringTest, Operator4)
+TEST_F(StringTest, ComparisonNotEqual)
 {
     String str1 = "Hello";
     String str2 = "World";
     ASSERT_TRUE(str1 != str2);
+}
+
+TEST_F(StringTest, PrintFrontLetter)
+{
+    String name = "Juwon Bae";
+    auto printFront = name.front();
+    PRINTLN("User name: {}", name);
+    PRINTLN("Name print first letter: {}", printFront);
+    ASSERT_EQ(String("J"), printFront);
+}
+
+TEST_F(StringTest, PrintBackLetter)
+{
+    String name = "Juwon Bae";
+    auto printBack = name.back();
+    PRINTLN("User name: {}", name);
+    PRINTLN("Name print last letter: {}", printBack);
+    ASSERT_EQ(String("e"), printBack);
 }
 
 int main(int argc, char **argv)

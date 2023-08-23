@@ -1,16 +1,15 @@
-project(string_test)
+project(console_style)
 
-add_executable(${PROJECT_NAME}
-    src/test_string.cpp
+add_library(${PROJECT_NAME}
+    src/console_style.cpp
+    src/function_test.cpp
+    src/execution_result.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
         spdlog::spdlog
-        string_implementation
-        console_style
-        gtest
-    )
+)
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC
@@ -19,3 +18,4 @@ target_include_directories(${PROJECT_NAME}
     PRIVATE
         ${PROJECT_BINARY_DIR}/src
 )
+
