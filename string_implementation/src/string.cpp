@@ -83,7 +83,7 @@ String String::front() const
     if (data_ != nullptr && data_[0] != '\0')
     {
         char frontChar[2] = {data_[0], '\0'};
-        return String(frontChar);
+        return frontChar;
     }
     return String();
 }
@@ -94,7 +94,7 @@ String String::back() const
     {
         size_t stringLength = strlen(data_);
         char backChar[2] = {data_[stringLength - 1], '\0'};
-        return String(backChar);
+        return backChar;
     }
     return String();
 }

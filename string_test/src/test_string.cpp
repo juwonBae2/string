@@ -81,6 +81,10 @@ TEST_F(StringTest, PrintBackLetter)
     PRINTLN("User name: {}", name);
     PRINTLN("Name print last letter: {}", printBack);
     ASSERT_EQ(String("e"), printBack);
+
+    String str1 = "3";
+    PRINTLN("seg seg: {}", str1.back());
+    ASSERT_EQ(String("3"), str1.back());
 }
 
 int main(int argc, char **argv)
