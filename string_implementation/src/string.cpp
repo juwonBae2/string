@@ -90,18 +90,53 @@ String String::front() const
 
 String String::back() const
 {
-    if (data_ != nullptr && data_[0] != '\n')
+    if (data_ != nullptr && data_[0] != '\0')
     {
-        size_t stringLength = strlen(data_);
-        char backChar[2] = {data_[stringLength - 1], '\0'};
+        size_t sizeLength = strlen(data_);
+        char backChar[2] = {data_[sizeLength - 1], '\0'};
         return backChar;
     }
     return String();
 }
 
-String String::trim(const String &str) const
+String String::trim() const
 {
-    return 0;
+    if (data_ == nullptr)
+    {
+        return String();
+    }
+
+    size_t length = strlen(data_);
+    size_t newIndex = 0;
+    char *trimmedData = new char[length + 1];
+
+    for (size_t i = 0; i < length; ++i)
+    {
+        if (!isspace(data_[i]))
+        {
+            trimmedData[newIndex++] = data_[i];
+        }
+    }
+
+    trimmedData[newIndex] = '\0';
+
+    String trimmedString;
+    if (newIndex > 0)
+    {
+        char *trimmedDataCopy = new char[newIndex + 1];
+        strncpy(trimmedDataCopy, trimmedData, newIndex);
+        trimmedDataCopy[newIndex] = '\0';
+        trimmedString = String(trimmedDataCopy);
+        delete[] trimmedDataCopy;
+
+        delete[] trimmedData;
+        return trimmedString;
+    }
+    else
+    {
+        delete[] trimmedData;
+        return trimmedString;
+    }
 }
 
 std::ostream &operator<<(std::ostream &os, const String &str)

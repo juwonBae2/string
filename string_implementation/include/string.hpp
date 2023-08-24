@@ -32,7 +32,7 @@ public:
     String back() const;
     // 공백 제거 함수
     // ex) Hello world => Helloworld
-    String trim(const String &str) const;
+    String trim() const;
     // 특정 문자열 제거 할 수 있는 함수
     // https://nomad-learner.github.io/study/2021/02/23/anagram%EB%A7%8C%EB%93%A4%EA%B8%B02.html
     String erase() const;

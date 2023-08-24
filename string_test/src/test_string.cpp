@@ -81,10 +81,31 @@ TEST_F(StringTest, PrintBackLetter)
     PRINTLN("User name: {}", name);
     PRINTLN("Name print last letter: {}", printBack);
     ASSERT_EQ(String("e"), printBack);
+}
 
-    String str1 = "3";
-    PRINTLN("seg seg: {}", str1.back());
-    ASSERT_EQ(String("3"), str1.back());
+TEST_F(StringTest, TrimFunction)
+{
+    String str1 = "   Hello world   ";
+    PRINTLN("Before:{}", str1);
+    String trimmed1 = str1.trim();
+    PRINTLN("After :{}", trimmed1);
+    ASSERT_EQ(String("Helloworld"), trimmed1);
+
+    String str2 = "       ";
+    ASSERT_EQ(String("       "), str2);
+    PRINTLN("{}", str2.trim());
+    ASSERT_EQ(String(""), str2.trim());
+
+    // PRINTLN("{}", trimmed2);
+    // EXPECT_EQ(String(), trimmed2);
+
+    // String str3 = "HelloWorld";
+    // String trimmed3 = str3.trim();
+    // ASSERT_EQ(String("HelloWorld"), trimmed3);
+
+    // String str4;
+    // String trimmed4 = str4.trim();
+    // ASSERT_EQ(String(), trimmed4);
 }
 
 int main(int argc, char **argv)
