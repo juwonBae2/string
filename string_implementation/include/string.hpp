@@ -27,15 +27,10 @@ public:
     String operator+(const String &str) const;
 
     // TODO: 추가 함수 구현
-    // string의 시작과 끝의 문자열을 반환해주는 함수
     String front() const;
     String back() const;
-    // 공백 제거 함수
-    // ex) Hello world => Helloworld
     String trim() const;
-    // 특정 문자열 제거 할 수 있는 함수
-    // https://nomad-learner.github.io/study/2021/02/23/anagram%EB%A7%8C%EB%93%A4%EA%B8%B02.html
-    String erase() const;
+    String erase(size_t start, size_t count) const;
     // 특정 문자열을 찾을수 있도록 하는 함수
     String find(const String &str) const;
     // TODO: namespace iterator 구현

@@ -1,10 +1,19 @@
 #include "string.hpp"
+#include <spdlog/spdlog.h>
 
 String::String() : data_(nullptr) {}
 
 String::String(const char *str)
 {
-    initializeFromString(str);
+    if (str != nullptr)
+    {
+        initializeFromString(str);
+    }
+    else
+    {
+        this->data_ = new char[1];
+        this->data_[0] = '\0';
+    }
 }
 
 String::~String()
@@ -103,7 +112,8 @@ String String::trim() const
 {
     if (data_ == nullptr)
     {
-        return String();
+        // 이거 먼가 이상하다. String(); 이 맞는데
+        return String("");
     }
 
     size_t length = strlen(data_);
@@ -120,22 +130,60 @@ String String::trim() const
 
     trimmedData[newIndex] = '\0';
 
-    String trimmedString;
-    if (newIndex > 0)
-    {
-        char *trimmedDataCopy = new char[newIndex + 1];
-        strncpy(trimmedDataCopy, trimmedData, newIndex);
-        trimmedDataCopy[newIndex] = '\0';
-        trimmedString = String(trimmedDataCopy);
-        delete[] trimmedDataCopy;
+    String trimmedString(trimmedData);
+    delete[] trimmedData;
 
-        delete[] trimmedData;
-        return trimmedString;
-    }
-    else
+    return trimmedString;
+}
+
+String String::erase(size_t start, size_t count) const
+{
+    try
     {
-        delete[] trimmedData;
-        return trimmedString;
+        if (data_ == nullptr)
+        {
+            return String("");
+        }
+
+        size_t length = strlen(data_);
+
+        // Ensure start index is within bounds
+        if (start >= length)
+        {
+            // Ensure start index is within bounds
+            spdlog::warn("Erase start index is out of bounds. Returning original string.");
+            return String(data_);
+        }
+
+        // Calculate the new length after erasing
+        size_t newLength = length - count;
+        if (newLength <= 0)
+        {
+            return String("");
+        }
+
+        char *erasedData = new char[newLength + 1];
+
+        // Copy characters before the erased portion
+        strncpy(erasedData, data_, start);
+        erasedData[start] = '\0';
+
+        // Copy characters after the erased portion
+        if (start + count < length)
+        {
+            strcat(erasedData, data_ + start + count);
+        }
+
+        String erasedString(erasedData);
+        delete[] erasedData;
+
+        return erasedString;
+    }
+    catch (const std::bad_alloc &)
+    {
+        // Handle memory allocation failure
+        spdlog::error("Memory allocation failed in erase.");
+        return String("");
     }
 }
 
