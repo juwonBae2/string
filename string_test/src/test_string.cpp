@@ -48,7 +48,6 @@ TEST_F(StringTest, ComparisonNotGreaterThan)
 
 TEST_F(StringTest, ComparisonEqualityAndInequality)
 {
-    // TODO: 에러 코드 return하도록 추가
     String str1 = "Hello";
     String str2 = "World";
     ASSERT_FALSE(str1 == str2);
@@ -86,26 +85,51 @@ TEST_F(StringTest, PrintBackLetter)
 TEST_F(StringTest, TrimFunction)
 {
     String str1 = "   Hello world   ";
-    PRINTLN("Before:{}", str1);
     String trimmed1 = str1.trim();
-    PRINTLN("After :{}", trimmed1);
     ASSERT_EQ(String("Helloworld"), trimmed1);
 
     String str2 = "       ";
     ASSERT_EQ(String("       "), str2);
-    PRINTLN("{}", str2.trim());
-    ASSERT_EQ(String(""), str2.trim());
+    String trimmed2 = str2.trim();
+    ASSERT_EQ(String(""), trimmed2);
 
-    // PRINTLN("{}", trimmed2);
-    // EXPECT_EQ(String(), trimmed2);
+    String str3 = "HelloWorld";
+    String trimmed3 = str3.trim();
+    ASSERT_EQ(String("HelloWorld"), trimmed3);
 
-    // String str3 = "HelloWorld";
-    // String trimmed3 = str3.trim();
-    // ASSERT_EQ(String("HelloWorld"), trimmed3);
+    String str4;
+    String trimmed4 = str4.trim();
+    ASSERT_EQ(String(""), trimmed4);
+}
 
-    // String str4;
-    // String trimmed4 = str4.trim();
-    // ASSERT_EQ(String(), trimmed4);
+TEST_F(StringTest, EraseFunction)
+{
+    // str lenght = 13
+    String str = "Hello, World!";
+
+    // Erase "World"
+    String erased1 = str.erase(7, 5);
+    ASSERT_EQ(String("Hello, !"), erased1);
+
+    // Erase "Hello, "
+    String erased2 = str.erase(0, 6);
+    ASSERT_EQ(String(" World!"), erased2);
+
+    // Erase entire string
+    String erased3 = str.erase(0, 13);
+    ASSERT_EQ(String(""), erased3);
+
+    // Erase more than length
+    String erased4 = str.erase(0, 20);
+    ASSERT_NE(String("Hello, World!"), erased4);
+
+    // Erase from out-of-bounds index
+    String erased5 = str.erase(15, 3);
+    ASSERT_EQ(String("Hello, World!"), erased5);
+
+    String emptyStr;
+    String erased6 = emptyStr.erase(0, 1);
+    ASSERT_EQ(String(""), erased6);
 }
 
 int main(int argc, char **argv)
