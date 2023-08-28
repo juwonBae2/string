@@ -23,29 +23,6 @@ protected:
     }
 };
 
-TEST_F(StringTest, Concatenation)
-{
-    String str1 = "Hello";
-    String str2 = "World";
-    String str3 = str1 + str2;
-
-    ASSERT_EQ(String("HelloWorld"), str3);
-}
-
-TEST_F(StringTest, ComparisonLessThan)
-{
-    String str1 = "A";
-    String str2 = "a";
-    ASSERT_TRUE(str1 < str2);
-}
-
-TEST_F(StringTest, ComparisonNotGreaterThan)
-{
-    String str1 = "Hello";
-    String str2 = "World";
-    ASSERT_FALSE(str1 > str2);
-}
-
 TEST_F(StringTest, ComparisonEqualityAndInequality)
 {
     String str1 = "Hello";
@@ -64,7 +41,30 @@ TEST_F(StringTest, ComparisonNotEqual)
     ASSERT_TRUE(str1 != str2);
 }
 
-TEST_F(StringTest, PrintFrontLetter)
+TEST_F(StringTest, ComparisonLessThan)
+{
+    String str1 = "A";
+    String str2 = "a";
+    ASSERT_TRUE(str1 < str2);
+}
+
+TEST_F(StringTest, ComparisonNotGreaterThan)
+{
+    String str1 = "Hello";
+    String str2 = "World";
+    ASSERT_FALSE(str1 > str2);
+}
+
+TEST_F(StringTest, Concatenation)
+{
+    String str1 = "Hello";
+    String str2 = "World";
+    String str3 = str1 + str2;
+
+    ASSERT_EQ(String("HelloWorld"), str3);
+}
+
+TEST_F(StringTest, PrintFrontLetterFuntion)
 {
     String name = "Juwon Bae";
     auto printFront = name.front();
@@ -73,7 +73,7 @@ TEST_F(StringTest, PrintFrontLetter)
     ASSERT_EQ(String("J"), printFront);
 }
 
-TEST_F(StringTest, PrintBackLetter)
+TEST_F(StringTest, PrintBackLetterFunction)
 {
     String name = "Juwon Bae";
     auto printBack = name.back();

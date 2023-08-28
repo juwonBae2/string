@@ -28,7 +28,6 @@ public:
 
     String operator+(const String &str) const;
 
-    // TODO: 추가 함수 구현
     String front() const;
     String back() const;
     String trim() const;
@@ -39,10 +38,10 @@ public:
 
     friend std::ostream &operator<<(std::ostream &os, const String &str);
 
+    size_t size() const;
+
 private:
     char *data_;
-
-    size_t size() const;
 
     void initializeFromString(const char *str);
     void initializeFromOther(const String &Other);

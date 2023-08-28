@@ -5,15 +5,7 @@ String::String() : data_(nullptr) {}
 
 String::String(const char *str)
 {
-    if (str != nullptr)
-    {
-        initializeFromString(str);
-    }
-    else
-    {
-        this->data_ = new char[1];
-        this->data_[0] = '\0';
-    }
+    initializeFromString(str);
 }
 
 String::String(const char *str, size_t length)
@@ -105,8 +97,7 @@ String String::front() const
 {
     if (data_ != nullptr && data_[0] != '\0')
     {
-        char frontChar[2] = {data_[0], '\0'};
-        return frontChar;
+        return String(data_, 1);
     }
     return String();
 }
@@ -116,8 +107,7 @@ String String::back() const
     if (data_ != nullptr && data_[0] != '\0')
     {
         size_t sizeLength = strlen(data_);
-        char backChar[2] = {data_[sizeLength - 1], '\0'};
-        return backChar;
+        return String(data_ + sizeLength - 1, 1);
     }
     return String();
 }
@@ -151,36 +141,33 @@ String String::trim() const
 
 String String::erase(size_t start, size_t count) const
 {
+    if (data_ == nullptr)
+    {
+        return String("");
+    }
+
+    size_t length = strlen(data_);
+
+    if (start >= length || count == 0)
+    {
+        spdlog::warn("Erase start index or count is out of bounds. Returning original string.");
+        return String(data_);
+    }
+
+    if (start + count > length)
+    {
+        count = length - start;
+        spdlog::warn("Erase count adjusted to fit within string length.");
+    }
+
     try
     {
-        if (data_ == nullptr)
-        {
-            return String("");
-        }
-
-        size_t length = strlen(data_);
-
-        if (start >= length)
-        {
-            spdlog::warn("Erase start index is out of bounds. Returning original string.");
-            return String(data_);
-        }
-
-        size_t newLength = length - count;
-        if (newLength <= 0)
-        {
-            return String("");
-        }
-
-        char *erasedData = new char[newLength + 1];
+        char *erasedData = new char[length - count + 1];
 
         strncpy(erasedData, data_, start);
         erasedData[start] = '\0';
 
-        if (start + count < length)
-        {
-            strcat(erasedData, data_ + start + count);
-        }
+        strcat(erasedData, data_ + start + count);
 
         String erasedString(erasedData);
         delete[] erasedData;
@@ -222,6 +209,11 @@ std::ostream &operator<<(std::ostream &os, const String &str)
     return os;
 }
 
+size_t String::size() const
+{
+    return data_ ? strlen(data_) : 0;
+}
+
 void String::initializeFromString(const char *str)
 {
     if (str != nullptr)
@@ -233,11 +225,6 @@ void String::initializeFromString(const char *str)
     {
         this->data_ = nullptr;
     }
-}
-
-size_t String::size() const
-{
-    return data_ ? strlen(data_) : 0;
 }
 
 void String::initializeFromOther(const String &Other)
