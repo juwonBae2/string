@@ -16,6 +16,20 @@ String::String(const char *str)
     }
 }
 
+String::String(const char *str, size_t length)
+{
+    if (str == nullptr)
+    {
+        data_ = nullptr;
+    }
+    else
+    {
+        data_ = new char[length + 1];
+        strncpy(data_, str, length);
+        data_[length] = '\0';
+    }
+}
+
 String::~String()
 {
     if (this->data_ != nullptr)
@@ -112,7 +126,6 @@ String String::trim() const
 {
     if (data_ == nullptr)
     {
-        // 이거 먼가 이상하다. String(); 이 맞는데
         return String("");
     }
 
@@ -181,6 +194,25 @@ String String::erase(size_t start, size_t count) const
     }
 }
 
+String String::find(const String &str) const
+{
+    if (data_ == nullptr || str.data_ == nullptr)
+    {
+        return String("");
+    }
+
+    char *found = strstr(data_, str.data_);
+    if (found)
+    {
+        size_t foundIndex = found - data_;
+        return String(data_ + foundIndex, str.size());
+    }
+    else
+    {
+        return String("");
+    }
+}
+
 std::ostream &operator<<(std::ostream &os, const String &str)
 {
     if (str.data_ != nullptr)
@@ -201,6 +233,11 @@ void String::initializeFromString(const char *str)
     {
         this->data_ = nullptr;
     }
+}
+
+size_t String::size() const
+{
+    return data_ ? strlen(data_) : 0;
 }
 
 void String::initializeFromOther(const String &Other)

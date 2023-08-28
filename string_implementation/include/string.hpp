@@ -7,6 +7,8 @@ class String
 public:
     String();
     String(const char *str);
+    String(const char *str, size_t length);
+
     ~String();
 
     // 복사 생성자: 다른 String 객체를 인수로 받아 새로운 객체를 초기화
@@ -31,7 +33,6 @@ public:
     String back() const;
     String trim() const;
     String erase(size_t start, size_t count) const;
-    // 특정 문자열을 찾을수 있도록 하는 함수
     String find(const String &str) const;
     // TODO: namespace iterator 구현
     // ex) String::iterator, String::begin, String::end
@@ -40,6 +41,8 @@ public:
 
 private:
     char *data_;
+
+    size_t size() const;
 
     void initializeFromString(const char *str);
     void initializeFromOther(const String &Other);

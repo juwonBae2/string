@@ -132,6 +132,27 @@ TEST_F(StringTest, EraseFunction)
     ASSERT_EQ(String(""), erased6);
 }
 
+TEST_F(StringTest, FindFunction)
+{
+    String str = "Hello, World!";
+
+    String found1 = str.find("World");
+    ASSERT_EQ(String("World"), found1);
+
+    String found2 = str.find("lo");
+    ASSERT_EQ(String("lo"), found2);
+
+    String found3 = str.find("foo");
+    ASSERT_EQ(String(""), found3);
+
+    String found4 = str.find("");
+    ASSERT_EQ(String(""), found4);
+
+    String emptyStr;
+    String found5 = emptyStr.find("bar");
+    ASSERT_EQ(String(""), found5);
+}
+
 int main(int argc, char **argv)
 {
     ::testing::InitGoogleTest(&argc, argv);
