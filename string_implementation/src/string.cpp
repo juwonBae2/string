@@ -231,13 +231,47 @@ void String::initializeFromOther(const String &Other)
     }
 }
 
-// String::Iterator::Iterator(pointer ptr) : ptr_(ptr) {}
+String::Iterator::Iterator(pointer ptr) : ptr_(ptr) {}
 
-// String::Iterator String::begin()
-// {
-//     return Iterator(data_);
-// }
-// String::Iterator String::end()
-// {
-//     return Iterator(data_ + size());
-// }
+String::Iterator::reference String::Iterator::operator*() const
+{
+    return *ptr_;
+}
+
+String::Iterator::pointer String::Iterator::operator->()
+{
+    return ptr_;
+}
+
+String::Iterator &String::Iterator::operator++()
+{
+    ++ptr_;
+    return *this;
+}
+
+String::Iterator String::Iterator::operator++(int)
+{
+    Iterator temp = *this;
+    ++ptr_;
+    return temp;
+}
+
+bool String::Iterator::operator==(const Iterator &other) const
+{
+    return ptr_ == other.ptr_;
+}
+
+bool String::Iterator::operator!=(const Iterator &other) const
+{
+    return ptr_ != other.ptr_;
+}
+
+String::Iterator String::begin()
+{
+    return String::Iterator(data_);
+}
+
+String::Iterator String::end()
+{
+    return String::Iterator(data_ + size());
+}

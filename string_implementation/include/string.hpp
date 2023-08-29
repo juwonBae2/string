@@ -61,33 +61,15 @@ public:
     using reference = char &;
     using difference_type = std::ptrdiff_t;
 
-    Iterator(pointer ptr) : ptr_(ptr) {}
+    Iterator(pointer ptr);
 
-    reference operator*() const { return *ptr_; }
-    pointer operator->() { return ptr_; }
+    reference operator*() const;
+    pointer operator->();
+    Iterator &operator++();
+    Iterator operator++(int);
 
-    Iterator &operator++()
-    {
-        ++ptr_;
-        return *this;
-    }
-
-    Iterator operator++(int)
-    {
-        Iterator temp = *this;
-        ++ptr_;
-        return temp;
-    }
-
-    bool operator==(const Iterator &other) const
-    {
-        return ptr_ == other.ptr_;
-    }
-
-    bool operator!=(const Iterator &other) const
-    {
-        return ptr_ != other.ptr_;
-    }
+    bool operator==(const Iterator &other) const;
+    bool operator!=(const Iterator &other) const;
 
 private:
     pointer ptr_;
