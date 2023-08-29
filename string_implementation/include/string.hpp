@@ -33,12 +33,18 @@ public:
     String trim() const;
     String erase(size_t start, size_t count) const;
     String find(const String &str) const;
-    // TODO: namespace iterator 구현
-    // ex) String::iterator, String::begin, String::end
+    // TODO: iterator 구현
+    // ex) String::iterator sample; sample.begin(), sample.end()
 
     friend std::ostream &operator<<(std::ostream &os, const String &str);
 
     size_t size() const;
+
+    class Iterator
+    {
+    public:
+        Iterator begin();
+    };
 
 private:
     char *data_;

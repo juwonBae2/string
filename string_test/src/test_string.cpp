@@ -153,6 +153,16 @@ TEST_F(StringTest, FindFunction)
     ASSERT_EQ(String(""), found5);
 }
 
+TEST_F(StringTest, sample)
+{
+    std::string iterator = "abcdefg";
+
+    for (std::string::iterator it = iterator.begin(); it != iterator.end(); ++it)
+    {
+        PRINTLN("Iterator: {}", *it);
+    }
+}
+
 int main(int argc, char **argv)
 {
     ::testing::InitGoogleTest(&argc, argv);
