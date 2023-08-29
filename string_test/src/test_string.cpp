@@ -70,7 +70,7 @@ TEST_F(StringTest, PrintFrontLetterFuntion)
     auto printFront = name.front();
     PRINTLN("User name: {}", name);
     PRINTLN("Name print first letter: {}", printFront);
-    ASSERT_EQ(String("J"), printFront);
+    ASSERT_EQ('J', printFront);
 }
 
 TEST_F(StringTest, PrintBackLetterFunction)
@@ -79,7 +79,7 @@ TEST_F(StringTest, PrintBackLetterFunction)
     auto printBack = name.back();
     PRINTLN("User name: {}", name);
     PRINTLN("Name print last letter: {}", printBack);
-    ASSERT_EQ(String("e"), printBack);
+    ASSERT_EQ('e', printBack);
 }
 
 TEST_F(StringTest, TrimFunction)
@@ -161,6 +161,9 @@ TEST_F(StringTest, sample)
     {
         PRINTLN("Iterator: {}", *it);
     }
+
+    iterator.front();
+    iterator.erase();
 }
 
 int main(int argc, char **argv)

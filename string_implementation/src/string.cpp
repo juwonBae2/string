@@ -93,23 +93,14 @@ String String::operator+(const String &str) const
     return result;
 }
 
-String String::front() const
+char &String::front()
 {
-    if (data_ != nullptr && data_[0] != '\0')
-    {
-        return String(data_, 1);
-    }
-    return String();
+    return this->data_[0];
 }
 
-String String::back() const
+char &String::back()
 {
-    if (data_ != nullptr && data_[0] != '\0')
-    {
-        size_t sizeLength = strlen(data_);
-        return String(data_ + sizeLength - 1, 1);
-    }
-    return String();
+    return this->data_[this->size() - 1];
 }
 
 String String::trim() const
@@ -239,3 +230,14 @@ void String::initializeFromOther(const String &Other)
         this->data_ = nullptr;
     }
 }
+
+// String::Iterator::Iterator(pointer ptr) : ptr_(ptr) {}
+
+// String::Iterator String::begin()
+// {
+//     return Iterator(data_);
+// }
+// String::Iterator String::end()
+// {
+//     return Iterator(data_ + size());
+// }

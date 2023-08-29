@@ -28,27 +28,67 @@ public:
 
     String operator+(const String &str) const;
 
-    String front() const;
-    String back() const;
+    char &front();
+    char &back();
+
     String trim() const;
     String erase(size_t start, size_t count) const;
     String find(const String &str) const;
-    // TODO: iterator 구현
-    // ex) String::iterator sample; sample.begin(), sample.end()
 
     friend std::ostream &operator<<(std::ostream &os, const String &str);
 
     size_t size() const;
 
-    class Iterator
-    {
-    public:
-        Iterator begin();
-    };
+    class Iterator;
+    Iterator begin();
+    Iterator end();
 
 private:
     char *data_;
 
     void initializeFromString(const char *str);
     void initializeFromOther(const String &Other);
+};
+
+// TODO: iterator 구현
+// ex) String::iterator sample; sample.begin(), sample.end()
+class String::Iterator
+{
+public:
+    using iterator_category = std::forward_iterator_tag;
+    using value_type = char;
+    using pointer = char *;
+    using reference = char &;
+    using difference_type = std::ptrdiff_t;
+
+    Iterator(pointer ptr) : ptr_(ptr) {}
+
+    reference operator*() const { return *ptr_; }
+    pointer operator->() { return ptr_; }
+
+    Iterator &operator++()
+    {
+        ++ptr_;
+        return *this;
+    }
+
+    Iterator operator++(int)
+    {
+        Iterator temp = *this;
+        ++ptr_;
+        return temp;
+    }
+
+    bool operator==(const Iterator &other) const
+    {
+        return ptr_ == other.ptr_;
+    }
+
+    bool operator!=(const Iterator &other) const
+    {
+        return ptr_ != other.ptr_;
+    }
+
+private:
+    pointer ptr_;
 };
