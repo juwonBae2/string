@@ -174,19 +174,29 @@ TEST_F(StringTest, IteratorFunction)
     GTEST_SKIP();
 
     String str = "Hello, World!";
-
-    String::Iterator iterator = str.begin();
-    String::Iterator strEnd = str.end();
-
     String result;
 
-    while (iterator != strEnd)
-    {
-        // result += *iterator;
-        ++iterator;
-    }
+    // ??
+    int i = 0;
 
-    ASSERT_EQ(str, result);
+    // for (String::Iterator it = str.begin(); it != str.end(); ++it, ++i)
+    // {
+    //     char expectedChar = str.;
+    //     ASSERT_EQ(expectedChar, *it);
+    // }
+
+    // String::Iterator iterator = str.begin();
+    // String::Iterator strEnd = str.end();
+
+    // String result;
+
+    // while (iterator != strEnd)
+    // {
+    //     // result += *iterator;
+    //     ++iterator;
+    // }
+
+    // ASSERT_EQ(str, result);
 }
 
 TEST_F(StringTest, sample)

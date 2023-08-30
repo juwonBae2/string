@@ -83,7 +83,7 @@ if(NOT cxxopts_POPULATED)
   add_subdirectory(${cxxopts_SOURCE_DIR} ${cxxopts_BINARY_DIR} EXCLUDE_FROM_ALL)
 endif()
 
-# TODO(jwbae): SFML 의존성
+# SFML
 FetchContent_Declare(
   sfml
   GIT_REPOSITORY https://github.com/SFML/SFML.git

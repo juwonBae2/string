@@ -85,6 +85,7 @@ bool String::operator>(const String &str) const
     return (strcmp(this->data_, str.data_) > 0);
 }
 
+// TODO: 추가 검토 필요
 String String::operator+(const String &str) const
 {
     size_t totalLength = strlen(this->data_) + strlen(str.data_);
