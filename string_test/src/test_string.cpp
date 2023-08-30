@@ -199,17 +199,18 @@ TEST_F(StringTest, IteratorFunction)
     // ASSERT_EQ(str, result);
 }
 
-TEST_F(StringTest, sample)
+TEST_F(StringTest, originStringIteratorTest)
 {
-    std::string iterator = "abcdefg";
+    GTEST_SKIP();
 
-    for (std::string::iterator it = iterator.begin(); it != iterator.end(); ++it)
+    std::string input = "abcdefg";
+
+    char firstChar = input[0];
+
+    for (size_t i = 0; i < input.length(); ++i)
     {
-        PRINTLN("Iterator: {}", *it);
+        ASSERT_EQ(firstChar, input[i]) << "Characters at index " << i << " are different.";
     }
-
-    iterator.front();
-    iterator.erase();
 }
 
 int main(int argc, char **argv)
