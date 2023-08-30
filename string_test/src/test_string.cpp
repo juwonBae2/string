@@ -64,6 +64,22 @@ TEST_F(StringTest, Concatenation)
     ASSERT_EQ(String("HelloWorld"), str3);
 }
 
+TEST_F(StringTest, PlusEqualOperator)
+{
+    String str1 = "Hello, ";
+    String str2 = "World!";
+
+    str1 += str2;
+    ASSERT_EQ(String("Hello, World!"), str1);
+
+    String emptyStr;
+    emptyStr += str2;
+    ASSERT_EQ(str2, emptyStr);
+
+    // str2 += emptyStr;
+    // ASSERT_EQ(str2, "World!");
+}
+
 TEST_F(StringTest, PrintFrontLetterFuntion)
 {
     String name = "Juwon Bae";
@@ -91,7 +107,7 @@ TEST_F(StringTest, TrimFunction)
     String str2 = "       ";
     ASSERT_EQ(String("       "), str2);
     String trimmed2 = str2.trim();
-    ASSERT_EQ(String(""), trimmed2);
+    ASSERT_EQ(String(), trimmed2);
 
     String str3 = "HelloWorld";
     String trimmed3 = str3.trim();
@@ -99,7 +115,7 @@ TEST_F(StringTest, TrimFunction)
 
     String str4;
     String trimmed4 = str4.trim();
-    ASSERT_EQ(String(""), trimmed4);
+    ASSERT_EQ(String(), trimmed4);
 }
 
 TEST_F(StringTest, EraseFunction)
@@ -117,7 +133,7 @@ TEST_F(StringTest, EraseFunction)
 
     // Erase entire string
     String erased3 = str.erase(0, 13);
-    ASSERT_EQ(String(""), erased3);
+    ASSERT_EQ(String(), erased3);
 
     // Erase more than length
     String erased4 = str.erase(0, 20);
@@ -129,7 +145,7 @@ TEST_F(StringTest, EraseFunction)
 
     String emptyStr;
     String erased6 = emptyStr.erase(0, 1);
-    ASSERT_EQ(String(""), erased6);
+    ASSERT_EQ(String(), erased6);
 }
 
 TEST_F(StringTest, FindFunction)
@@ -143,14 +159,34 @@ TEST_F(StringTest, FindFunction)
     ASSERT_EQ(String("lo"), found2);
 
     String found3 = str.find("foo");
-    ASSERT_EQ(String(""), found3);
+    ASSERT_EQ(String(), found3);
 
     String found4 = str.find("");
-    ASSERT_EQ(String(""), found4);
+    ASSERT_EQ(String(), found4);
 
     String emptyStr;
     String found5 = emptyStr.find("bar");
-    ASSERT_EQ(String(""), found5);
+    ASSERT_EQ(String(), found5);
+}
+
+TEST_F(StringTest, IteratorFunction)
+{
+    GTEST_SKIP();
+
+    String str = "Hello, World!";
+
+    String::Iterator iterator = str.begin();
+    String::Iterator strEnd = str.end();
+
+    String result;
+
+    while (iterator != strEnd)
+    {
+        // result += *iterator;
+        ++iterator;
+    }
+
+    ASSERT_EQ(str, result);
 }
 
 TEST_F(StringTest, sample)

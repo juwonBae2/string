@@ -17,13 +17,6 @@ endif()
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/module" ${CMAKE_MODULE_PATH})
 message(STATUS "${CMAKE_MODULE_PATH}")
 
-# 프로젝트 이름과 몇가지 유용한 설정
-project(playground VERSION 1.0.0
-                   DESCRIPTION "V2X Playground"
-                   LANGUAGES C CXX)
-
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # LSP support
-
 # 별도 build 폴더가 아닌 경우 cmake 할 수 없도록 방지
 file(TO_CMAKE_PATH "${PROJECT_BINARY_DIR}/CMakeLists.txt" LOC_PATH)
 if(EXISTS "${LOC_PATH}")
@@ -76,19 +69,6 @@ if(NOT googletest_POPULATED)
   FetchContent_Populate(googletest)
   set(gtest_build_tests OFF CACHE BOOL "Enable gtest tests" FORCE)
   add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR} EXCLUDE_FROM_ALL)
-endif()
-
-FetchContent_Declare(
-  googlebenchmark
-  GIT_REPOSITORY https://github.com/google/benchmark
-  GIT_TAG        v1.5.3
-)
-FetchContent_GetProperties(googlebenchmark)
-
-if(NOT googlebenchmark_POPULATED)
-  FetchContent_Populate(googlebenchmark)
-  set(BENCHMARK_ENABLE_TESTING OFF CACHE BOOL "Enable gbench tests" FORCE)
-  add_subdirectory(${googlebenchmark_SOURCE_DIR} ${googlebenchmark_BINARY_DIR} EXCLUDE_FROM_ALL)
 endif()
 
 FetchContent_Declare(

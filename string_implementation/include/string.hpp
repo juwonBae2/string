@@ -27,6 +27,7 @@ public:
     bool operator>(const String &str) const;
 
     String operator+(const String &str) const;
+    String &operator+=(const String &str);
 
     char &front();
     char &back();

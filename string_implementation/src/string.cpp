@@ -1,7 +1,10 @@
 #include "string.hpp"
 #include <spdlog/spdlog.h>
 
-String::String() : data_(nullptr) {}
+String::String() : data_(new char[1])
+{
+    data_[0] = '\0';
+}
 
 String::String(const char *str)
 {
@@ -84,13 +87,35 @@ bool String::operator>(const String &str) const
 
 String String::operator+(const String &str) const
 {
-    size_t totalLen = strlen(this->data_) + strlen(str.data_);
-    char *temp = new char[totalLen + 1];
+    size_t totalLength = strlen(this->data_) + strlen(str.data_);
+    char *temp = new char[totalLength + 1];
     strcpy(temp, data_);
     strcat(temp, str.data_);
     String result(temp);
     delete[] temp;
     return result;
+}
+
+// TODO: 추가 검토 필요
+String &String::operator+=(const String &str)
+{
+    size_t totalLength = strlen(data_) + strlen(str.data_);
+    char *newData = new char[totalLength + 1];
+
+    if (data_ != nullptr)
+    {
+        strcpy(newData, data_);
+        delete[] data_;
+    }
+    else
+    {
+        newData[0] = '\0';
+    }
+
+    strcat(newData, str.data_);
+    data_ = newData;
+
+    return *this;
 }
 
 char &String::front()
@@ -107,7 +132,7 @@ String String::trim() const
 {
     if (data_ == nullptr)
     {
-        return String("");
+        return String();
     }
 
     size_t length = strlen(data_);
@@ -134,7 +159,7 @@ String String::erase(size_t start, size_t count) const
 {
     if (data_ == nullptr)
     {
-        return String("");
+        return String();
     }
 
     size_t length = strlen(data_);
@@ -168,7 +193,7 @@ String String::erase(size_t start, size_t count) const
     catch (const std::bad_alloc &)
     {
         spdlog::error("Memory allocation failed in erase.");
-        return String("");
+        return String();
     }
 }
 
@@ -176,7 +201,7 @@ String String::find(const String &str) const
 {
     if (data_ == nullptr || str.data_ == nullptr)
     {
-        return String("");
+        return String();
     }
 
     char *found = strstr(data_, str.data_);
@@ -187,7 +212,7 @@ String String::find(const String &str) const
     }
     else
     {
-        return String("");
+        return String();
     }
 }
 

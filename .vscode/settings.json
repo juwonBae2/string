@@ -120,6 +120,7 @@
         "bit": "cpp",
         "*.def": "cpp",
         "version": "cpp",
-        "filesystem": "cpp"
+        "filesystem": "cpp",
+        "memory_resource": "cpp"
     }
 }
