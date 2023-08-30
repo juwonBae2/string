@@ -29,8 +29,8 @@ public:
     String operator+(const String &str) const;
     String &operator+=(const String &str);
 
-    char &front();
-    char &back();
+    char &front() const;
+    char &back() const;
 
     String trim() const;
     String erase(size_t start, size_t count) const;

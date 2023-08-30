@@ -85,46 +85,41 @@ bool String::operator>(const String &str) const
     return (strcmp(this->data_, str.data_) > 0);
 }
 
-// TODO: 추가 검토 필요
 String String::operator+(const String &str) const
 {
     size_t totalLength = strlen(this->data_) + strlen(str.data_);
     char *temp = new char[totalLength + 1];
+
     strcpy(temp, data_);
     strcat(temp, str.data_);
+
     String result(temp);
+
     delete[] temp;
+
     return result;
 }
 
-// TODO: 추가 검토 필요
 String &String::operator+=(const String &str)
 {
-    size_t totalLength = strlen(data_) + strlen(str.data_);
-    char *newData = new char[totalLength + 1];
+    size_t totalLength = strlen(this->data_) + strlen(str.data_);
+    char *temp = new char[totalLength + 1];
 
-    if (data_ != nullptr)
-    {
-        strcpy(newData, data_);
-        delete[] data_;
-    }
-    else
-    {
-        newData[0] = '\0';
-    }
+    strcpy(temp, data_);
+    strcat(temp, str.data_);
 
-    strcat(newData, str.data_);
-    data_ = newData;
+    delete[] data_;
+    data_ = temp;
 
     return *this;
 }
 
-char &String::front()
+char &String::front() const
 {
     return this->data_[0];
 }
 
-char &String::back()
+char &String::back() const
 {
     return this->data_[this->size() - 1];
 }
@@ -200,9 +195,10 @@ String String::erase(size_t start, size_t count) const
 
 String String::find(const String &str) const
 {
-    if (data_ == nullptr || str.data_ == nullptr)
+    if (str.data_ == nullptr || data_ == nullptr)
     {
-        return String();
+        spdlog::error("Null pointer passed to find() function.");
+        throw std::runtime_error("Null pointer passed to find() function.");
     }
 
     char *found = strstr(data_, str.data_);
@@ -211,10 +207,18 @@ String String::find(const String &str) const
         size_t foundIndex = found - data_;
         return String(data_ + foundIndex, str.size());
     }
+    else if (str.data_ == nullptr && str.data_[0] == '\0')
+    {
+        spdlog::error("Empty string passed to find() function.");
+        // return String();
+    }
     else
     {
-        return String();
+        spdlog::info("Substring not found.");
+        // return String();
     }
+
+    return String();
 }
 
 std::ostream &operator<<(std::ostream &os, const String &str)
@@ -235,6 +239,7 @@ void String::initializeFromString(const char *str)
 {
     if (str != nullptr)
     {
+        // TODO: if 만약 null이 아닐경우?
         this->data_ = new char[strlen(str) + 1];
         strcpy(data_, str);
     }

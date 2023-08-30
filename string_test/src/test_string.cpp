@@ -23,6 +23,17 @@ protected:
     }
 };
 
+// TEST_F(StringTest, WTF)
+// {
+//     char **test_wrapper = new char *[2];
+//     char *test = new char[4]{1, 2, 3, 4};
+//     test_wrapper[0] = nullptr;
+//     test_wrapper[1] = test;
+//     String str1{test_wrapper};
+//     ASSERT_EQ(str1.size(), 4);
+//     delete[] test;
+// }
+
 TEST_F(StringTest, ComparisonEqualityAndInequality)
 {
     String str1 = "Hello";
@@ -76,25 +87,26 @@ TEST_F(StringTest, PlusEqualOperator)
     emptyStr += str2;
     ASSERT_EQ(str2, emptyStr);
 
+    // TODO: Add test case
     // str2 += emptyStr;
     // ASSERT_EQ(str2, "World!");
 }
 
-TEST_F(StringTest, PrintFrontLetterFuntion)
+TEST_F(StringTest, PrintFrontCharacterFuntion)
 {
     String name = "Juwon Bae";
     auto printFront = name.front();
     PRINTLN("User name: {}", name);
-    PRINTLN("Name print first letter: {}", printFront);
+    PRINTLN("Name print first character: {}", printFront);
     ASSERT_EQ('J', printFront);
 }
 
-TEST_F(StringTest, PrintBackLetterFunction)
+TEST_F(StringTest, PrintBackCharacterFunction)
 {
     String name = "Juwon Bae";
     auto printBack = name.back();
     PRINTLN("User name: {}", name);
-    PRINTLN("Name print last letter: {}", printBack);
+    PRINTLN("Name print last character: {}", printBack);
     ASSERT_EQ('e', printBack);
 }
 
