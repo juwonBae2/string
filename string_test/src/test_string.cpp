@@ -173,12 +173,12 @@ TEST_F(StringTest, FindFunction)
     String found3 = str.find("foo");
     ASSERT_EQ(String(), found3);
 
-    String found4 = str.find("");
-    ASSERT_EQ(String(), found4);
-
     String emptyStr;
     String found5 = emptyStr.find("bar");
     ASSERT_EQ(String(), found5);
+
+    String found4 = str.find("");
+    ASSERT_EQ(String(), found4);
 }
 
 TEST_F(StringTest, IteratorFunction)
@@ -211,7 +211,7 @@ TEST_F(StringTest, IteratorFunction)
     // ASSERT_EQ(str, result);
 }
 
-TEST_F(StringTest, originStringIteratorTest)
+TEST_F(StringTest, originStringIterator)
 {
     GTEST_SKIP();
 

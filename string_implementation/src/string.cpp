@@ -201,21 +201,20 @@ String String::find(const String &str) const
         throw std::runtime_error("Null pointer passed to find() function.");
     }
 
+    if (str.size() == 0)
+    {
+        spdlog::error("Empty string passed to find() function.");
+    }
+
     char *found = strstr(data_, str.data_);
     if (found)
     {
         size_t foundIndex = found - data_;
         return String(data_ + foundIndex, str.size());
     }
-    else if (str.data_ == nullptr && str.data_[0] == '\0')
-    {
-        spdlog::error("Empty string passed to find() function.");
-        // return String();
-    }
-    else
+    else if (str.size() != 0)
     {
         spdlog::info("Substring not found.");
-        // return String();
     }
 
     return String();
@@ -239,7 +238,6 @@ void String::initializeFromString(const char *str)
 {
     if (str != nullptr)
     {
-        // TODO: if 만약 null이 아닐경우?
         this->data_ = new char[strlen(str) + 1];
         strcpy(data_, str);
     }
