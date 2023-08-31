@@ -87,27 +87,36 @@ TEST_F(StringTest, PlusEqualOperator)
     emptyStr += str2;
     ASSERT_EQ(str2, emptyStr);
 
-    // TODO: Add test case
-    // str2 += emptyStr;
-    // ASSERT_EQ(str2, "World!");
+    String emptyStr2;
+    str2 += emptyStr2;
+    ASSERT_EQ(str2, "World!");
 }
 
 TEST_F(StringTest, PrintFrontCharacterFuntion)
 {
-    String name = "Juwon Bae";
-    auto printFront = name.front();
-    PRINTLN("User name: {}", name);
-    PRINTLN("Name print first character: {}", printFront);
-    ASSERT_EQ('J', printFront);
+    String s("Exemplary");
+    char &front1 = s.front();
+    ASSERT_EQ('E', front1);
+    front1 = 'e';
+    ASSERT_EQ(String("exemplary"), s);
+
+    String const c("Exemplary");
+    char const &front2 = c.front();
+    ASSERT_EQ('E', front2);
+    ASSERT_EQ(String("Exemplary"), &front2);
 }
 
 TEST_F(StringTest, PrintBackCharacterFunction)
 {
-    String name = "Juwon Bae";
-    auto printBack = name.back();
-    PRINTLN("User name: {}", name);
-    PRINTLN("Name print last character: {}", printBack);
-    ASSERT_EQ('e', printBack);
+    String s("Exemplary");
+    char &back1 = s.back();
+    ASSERT_EQ('y', back1);
+    back1 = 's';
+    ASSERT_EQ(String("Exemplars"), s);
+
+    String const c("Exemplary");
+    char const &back2 = c.back();
+    ASSERT_EQ('y', back2);
 }
 
 TEST_F(StringTest, TrimFunction)
@@ -130,6 +139,7 @@ TEST_F(StringTest, TrimFunction)
     ASSERT_EQ(String(), trimmed4);
 }
 
+// TODO: iterator 구현이 완료 되면 begin, end, find 까지 합쳐 통합 테스트 코드 작성
 TEST_F(StringTest, EraseFunction)
 {
     // str lenght = 13
@@ -160,6 +170,7 @@ TEST_F(StringTest, EraseFunction)
     ASSERT_EQ(String(), erased6);
 }
 
+// TODO: 링크에 있는 test code로 변경 https://en.cppreference.com/w/cpp/string/basic_string/find
 TEST_F(StringTest, FindFunction)
 {
     String str = "Hello, World!";
@@ -179,6 +190,20 @@ TEST_F(StringTest, FindFunction)
 
     String found4 = str.find("");
     ASSERT_EQ(String(), found4);
+}
+
+TEST_F(StringTest, substrFunction)
+{
+    String a = "0123456789abcdefghij";
+
+    String substr1 = a.substr(10);
+    ASSERT_EQ(String("abcdefghij"), substr1);
+
+    String substr2 = a.substr(5, 3);
+    ASSERT_EQ(String("567"), substr2);
+
+    String substr3 = a.substr(a.size() - 3, 50);
+    ASSERT_EQ(String("hij"), substr3);
 }
 
 TEST_F(StringTest, IteratorFunction)
@@ -213,15 +238,13 @@ TEST_F(StringTest, IteratorFunction)
 
 TEST_F(StringTest, originStringIterator)
 {
-    GTEST_SKIP();
-
     std::string input = "abcdefg";
-
-    char firstChar = input[0];
 
     for (size_t i = 0; i < input.length(); ++i)
     {
-        ASSERT_EQ(firstChar, input[i]) << "Characters at index " << i << " are different.";
+        char expectedChar = input[i];
+        char actualChar = input[i];
+        ASSERT_EQ(expectedChar, actualChar);
     }
 }
 
