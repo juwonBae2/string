@@ -37,9 +37,9 @@ public:
     // TODO: string의 오버로드 된 find 함수 추가 구현
     String find(const String &str) const;
 
-    // TODO: 추가 함수 구현
     String substr(size_t start) const;
     String substr(size_t start, size_t count) const;
+    // TODO: 추가 함수 구현
     String empty();
     String pop_back();
     String push_back();
