@@ -145,6 +145,12 @@ String String::trim() const
 
     trimmedData[newIndex] = '\0';
 
+    // TODO: trim을 할 게 없거나 빈 생성자가 들어올 경우 로그 추가
+    // if (newIndex == 0)
+    // {
+    //     spdlog::warn("Trimmed string is empty.");
+    // }
+
     String trimmedString(trimmedData);
     delete[] trimmedData;
 
@@ -155,21 +161,22 @@ String String::erase(size_t start, size_t count) const
 {
     if (data_ == nullptr)
     {
-        return String();
+        spdlog::error("Null pointer in erase() funtion.");
+        throw std::runtime_error("Null pointer in erase() funtion.");
     }
 
     size_t length = strlen(data_);
 
     if (start >= length || count == 0)
     {
-        spdlog::warn("Erase start index or count is out of bounds. Returning original string.");
+        spdlog::error("Erase start index or count is out of bounds. Returning original string.");
         return String(data_);
     }
 
     if (start + count > length)
     {
         count = length - start;
-        spdlog::warn("Erase count adjusted to fit within string length.");
+        spdlog::warn("Erase count adjusted to fit within string length. String length: {}", count);
     }
 
     try
@@ -189,7 +196,7 @@ String String::erase(size_t start, size_t count) const
     catch (const std::bad_alloc &)
     {
         spdlog::error("Memory allocation failed in erase.");
-        return String();
+        throw std::runtime_error("Memory allocation failed in erase.");
     }
 }
 
@@ -218,6 +225,82 @@ String String::find(const String &str) const
     }
 
     return String();
+}
+
+String String::substr(size_t start) const
+{
+    if (data_ == nullptr)
+    {
+        spdlog::error("Null pointer in substr() funtion.");
+        throw std::runtime_error("Null pointer in substr() funtion.");
+    }
+
+    size_t length = strlen(data_);
+    if (start >= length)
+    {
+        spdlog::error("Invalid start index in substr() function.");
+        throw std::runtime_error("Invalid start index in substr() function.");
+    }
+
+    size_t count = length - start;
+
+    try
+    {
+        char *substrData = new char[count + 1];
+
+        strncpy(substrData, data_ + start, count);
+        substrData[count] = '\0';
+
+        String subString(substrData);
+        delete[] substrData;
+
+        return subString;
+    }
+    catch (const std::bad_alloc &)
+    {
+        spdlog::error("Memory allocation failed in substr.");
+        throw std::runtime_error("Memory allocation failed in substr.");
+    }
+}
+
+String String::substr(size_t start, size_t count) const
+{
+    if (data_ == nullptr)
+    {
+        spdlog::error("Null pointer in substr() funtion.");
+        throw std::runtime_error("Null pointer in substr() funtion.");
+    }
+
+    size_t length = strlen(data_);
+
+    if (start >= length)
+    {
+        spdlog::error("Invalid start index in substr() function.");
+        throw std::out_of_range("Invalid start index in substr() function.");
+    }
+
+    if (count == 0)
+    {
+        return String();
+    }
+
+    try
+    {
+        char *substrData = new char[count + 1];
+
+        strncpy(substrData, data_ + start, count);
+        substrData[count] = '\0';
+
+        String subString(substrData);
+        delete[] substrData;
+
+        return subString;
+    }
+    catch (const std::bad_alloc &)
+    {
+        spdlog::error("Memory allocation failed in substr.");
+        throw std::runtime_error("Memory allocation failed in substr.");
+    }
 }
 
 std::ostream &operator<<(std::ostream &os, const String &str)
