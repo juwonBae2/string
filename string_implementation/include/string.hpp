@@ -34,8 +34,16 @@ public:
 
     String trim() const;
     String erase(size_t start, size_t count) const;
+    // TODO: string의 오버로드 된 find 함수 추가 구현
     String find(const String &str) const;
 
+    // TODO: 추가 함수 구현
+    String substr(size_t start) const;
+    String substr(size_t start, size_t count) const;
+    String empty();
+    String pop_back();
+    String push_back();
+    // TODO: friend 삭제
     friend std::ostream &operator<<(std::ostream &os, const String &str);
 
     size_t size() const;
@@ -51,8 +59,10 @@ private:
     void initializeFromOther(const String &Other);
 };
 
-// TODO: iterator 구현
-// ex) String::iterator sample; sample.begin(), sample.end()
+// Member types
+// TODO: String::iterator 구현
+// ex) for( String::iterator sample; sample.begin() < sample.end(); ++sample)
+// String::size_type 구현
 class String::Iterator
 {
 public:
@@ -75,3 +85,7 @@ public:
 private:
     pointer ptr_;
 };
+
+// TODO: stoi, itos 구현
+void stoi();
+void itos();
