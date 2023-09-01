@@ -69,10 +69,10 @@ TEST_F(StringTest, ComparisonNotGreaterThan)
 TEST_F(StringTest, Concatenation)
 {
     String str1 = "Hello";
-    String str2 = "World";
+    String str2 = " World";
     String str3 = str1 + str2;
 
-    ASSERT_EQ(String("HelloWorld"), str3);
+    ASSERT_EQ(String("Hello World"), str3);
 }
 
 TEST_F(StringTest, PlusEqualOperator)
@@ -202,7 +202,7 @@ TEST_F(StringTest, substrFunction)
     String substr2 = a.substr(5, 3);
     ASSERT_EQ(String("567"), substr2);
 
-    String substr3 = a.substr(a.size() - 3, 50);
+    String substr3 = a.substr(a.size() - 3, 50); // =(17, 3)
     ASSERT_EQ(String("hij"), substr3);
 }
 
@@ -240,10 +240,10 @@ TEST_F(StringTest, originStringIterator)
 {
     std::string input = "abcdefg";
 
-    for (size_t i = 0; i < input.length(); ++i)
+    for (std::string::iterator it = input.begin(); it < input.end(); ++it)
     {
-        char expectedChar = input[i];
-        char actualChar = input[i];
+        char expectedChar = *it;
+        char actualChar = *it;
         ASSERT_EQ(expectedChar, actualChar);
     }
 }

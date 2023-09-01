@@ -38,6 +38,7 @@ String::String(const String &str)
     initializeFromOther(str);
 }
 
+// TODO: Add test code
 String::String(String &&str) noexcept
 {
     this->data_ = str.data_;
@@ -272,7 +273,6 @@ String String::substr(size_t start, size_t count) const
     }
 
     size_t length = strlen(data_);
-
     if (start >= length)
     {
         spdlog::error("Invalid start index in substr() function.");

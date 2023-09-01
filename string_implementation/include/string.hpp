@@ -43,6 +43,9 @@ public:
     String empty();
     String pop_back();
     String push_back();
+    String reserve();
+    String resize();
+
     // TODO: friend 삭제
     friend std::ostream &operator<<(std::ostream &os, const String &str);
 
@@ -52,6 +55,11 @@ public:
     Iterator begin();
     Iterator end();
 
+    // String::size_type 구현
+    // String::Npos 구현
+    class size_type;
+    class Nops;
+
 private:
     char *data_;
 
@@ -59,10 +67,31 @@ private:
     void initializeFromOther(const String &Other);
 };
 
+// std::ostream &operator<<(std::ostream &os, const String &str)
+// {
+//     if (str.data_ != nullptr)
+//     {
+//         os << str.data_;
+//     }
+//     return os;
+// }
+
 // Member types
+
+// TODO: 사이트처럼 파일 분리 (https://en.cppreference.com/w/cpp/string)
 // TODO: String::iterator 구현
 // ex) for( String::iterator sample; sample.begin() < sample.end(); ++sample)
 // String::size_type 구현
+// String::Npos 구현
+
+class String::size_type
+{
+};
+
+class String::Nops
+{
+};
+
 class String::Iterator
 {
 public:
