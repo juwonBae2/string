@@ -206,13 +206,43 @@ TEST_F(StringTest, substrFunction)
     ASSERT_EQ(String("hij"), substr3);
 }
 
+TEST_F(StringTest, emptyFunction)
+{
+    String s;
+    std::boolalpha(std::cout);
+    PRINTLN("s.empty():{}\t s:{}", s.empty(), s);
+    ASSERT_EQ(true, s.empty());
+    ASSERT_EQ(String(), "");
+
+    s = "Exemplar";
+    PRINTLN("s.empty():{}\t s:{}", s.empty(), s);
+    ASSERT_EQ(false, s.empty());
+    ASSERT_EQ(String("Exemplar"), "Exemplar");
+
+    s = "";
+    PRINTLN("s.empty():{}\t s:{}", s.empty(), s);
+    ASSERT_EQ(true, s.empty());
+    ASSERT_EQ(String(), "");
+}
+
+TEST_F(StringTest, popBackFunction)
+{
+
+    String str("Short string!");
+    std::cout << "before=\"" << str << "\"\n";
+    ASSERT_TRUE(str.size() == 13);
+
+    str.pop_back();
+    std::cout << " after=\"" << str << "\"\n";
+    ASSERT_TRUE(str.size() == 12);
+}
+
 TEST_F(StringTest, IteratorFunction)
 {
     GTEST_SKIP();
 
     String str = "Hello, World!";
     String result;
-
     // ??
     int i = 0;
 
@@ -239,6 +269,7 @@ TEST_F(StringTest, IteratorFunction)
 TEST_F(StringTest, originStringIterator)
 {
     std::string input = "abcdefg";
+    input.pop_back();
 
     for (std::string::iterator it = input.begin(); it < input.end(); ++it)
     {

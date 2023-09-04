@@ -9,6 +9,7 @@ String::String() : data_(new char[1])
 String::String(const char *str)
 {
     initializeFromString(str);
+    size_ = strlen(data_);
 }
 
 String::String(const char *str, size_t length)
@@ -22,6 +23,7 @@ String::String(const char *str, size_t length)
         data_ = new char[length + 1];
         strncpy(data_, str, length);
         data_[length] = '\0';
+        size_ = length;
     }
 }
 
@@ -302,6 +304,38 @@ String String::substr(size_t start, size_t count) const
         throw std::runtime_error("Memory allocation failed in substr.");
     }
 }
+
+bool String::empty() const
+{
+    return this->size() == 0;
+}
+
+void String::pop_back()
+{
+    if (empty())
+    {
+        spdlog::info("string::pop_back(): string is already empty");
+    }
+    else
+    {
+        char *newChar = new char[size()];
+
+        for (size_t i = 0; i < size() - 1; ++i)
+        {
+            newChar[i] = data_[i];
+        }
+
+        delete[] data_;
+        data_ = newChar;
+
+        size_ = size() - 1;
+    }
+}
+
+// String String::pop_back();
+// String String::push_back();
+// String String::reserve();
+// String String::resize();
 
 std::ostream &operator<<(std::ostream &os, const String &str)
 {

@@ -39,12 +39,14 @@ public:
 
     String substr(size_t start) const;
     String substr(size_t start, size_t count) const;
+    bool empty() const;
+    void pop_back();
+
     // TODO: 추가 함수 구현
-    String empty();
-    String pop_back();
     String push_back();
     String reserve();
     String resize();
+    String cleer();
 
     // TODO: friend 삭제
     friend std::ostream &operator<<(std::ostream &os, const String &str);
@@ -62,6 +64,7 @@ public:
 
 private:
     char *data_;
+    size_t size_;
 
     void initializeFromString(const char *str);
     void initializeFromOther(const String &Other);
