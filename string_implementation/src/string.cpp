@@ -336,6 +336,7 @@ void String::pop_back()
 // String String::push_back();
 // String String::reserve();
 // String String::resize();
+// String String::cleer();
 
 std::ostream &operator<<(std::ostream &os, const String &str)
 {
