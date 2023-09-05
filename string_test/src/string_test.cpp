@@ -255,6 +255,12 @@ TEST_F(StringTest, pushBackFunction)
     ASSERT_EQ(String("Short string!"), str);
 }
 
+TEST_F(StringTest, atFunction)
+{
+    String s("message");
+    ASSERT_EQ('e', s.at(2));
+}
+
 TEST_F(StringTest, IteratorFunction)
 {
     // GTEST_SKIP();
