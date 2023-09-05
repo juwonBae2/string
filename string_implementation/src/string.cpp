@@ -1,7 +1,7 @@
 #include "string.hpp"
 #include <spdlog/spdlog.h>
 
-String::String() : data_(new char[1])
+String::String() : data_(new char[1]), size_(0)
 {
     data_[0] = '\0';
 }
@@ -17,6 +17,7 @@ String::String(const char *str, size_t length)
     if (str == nullptr)
     {
         data_ = nullptr;
+        size_ = 0;
     }
     else
     {
@@ -41,10 +42,10 @@ String::String(const String &str)
 }
 
 // TODO: Add test code
-String::String(String &&str) noexcept
+String::String(String &&str) noexcept : data_(str.data_), size_(str.size_)
 {
-    this->data_ = str.data_;
     str.data_ = nullptr;
+    str.size_ = 0;
 }
 
 String &String::operator=(const String &str)
@@ -62,8 +63,12 @@ String &String::operator=(String &&str) noexcept
     if (this != &str)
     {
         delete[] data_;
+
         data_ = str.data_;
+        size_ = str.size_;
+
         str.data_ = nullptr;
+        str.size_ = 0;
     }
     return *this;
 }
@@ -90,29 +95,37 @@ bool String::operator>(const String &str) const
 
 String String::operator+(const String &str) const
 {
-    size_t totalLength = strlen(this->data_) + strlen(str.data_);
-    char *temp = new char[totalLength + 1];
+    String result;
+    result.size_ = size_ + str.size_;
+    result.data_ = new char[result.size_ + 1];
 
-    strcpy(temp, data_);
-    strcat(temp, str.data_);
-
-    String result(temp);
-
-    delete[] temp;
-
+    if (data_)
+    {
+        strcpy(result.data_, data_);
+    }
+    if (str.data_)
+    {
+        strcat(result.data_, str.data_);
+    }
     return result;
 }
 
 String &String::operator+=(const String &str)
 {
-    size_t totalLength = strlen(this->data_) + strlen(str.data_);
-    char *temp = new char[totalLength + 1];
+    size_t new_size = size_ + str.size_;
+    char *new_data = new char[new_size + 1];
 
-    strcpy(temp, data_);
-    strcat(temp, str.data_);
-
+    if (data_)
+    {
+        strcpy(new_data, data_);
+    }
+    if (str.data_)
+    {
+        strcat(new_data, str.data_);
+    }
     delete[] data_;
-    data_ = temp;
+    data_ = new_data;
+    size_ = new_size;
 
     return *this;
 }
@@ -307,7 +320,7 @@ String String::substr(size_t start, size_t count) const
 
 bool String::empty() const
 {
-    return this->size() == 0;
+    return size_ == 0;
 }
 
 void String::pop_back()
@@ -332,8 +345,32 @@ void String::pop_back()
     }
 }
 
-// String String::pop_back();
-// String String::push_back();
+void String::push_back(const String &str)
+{
+    size_t totalSize = size_ + str.size_;
+    char *newData = new char[totalSize + 1];
+
+    if (data_ != nullptr)
+    {
+        strcpy(newData, data_);
+    }
+
+    if (str.data_ != nullptr)
+    {
+        strcat(newData, str.data_);
+    }
+
+    delete[] data_;
+
+    data_ = newData;
+    size_ = totalSize;
+}
+
+char &String::at(size_t index) const
+{
+    return this->data_[index];
+}
+
 // String String::reserve();
 // String String::resize();
 // String String::cleer();
@@ -349,32 +386,42 @@ std::ostream &operator<<(std::ostream &os, const String &str)
 
 size_t String::size() const
 {
-    return data_ ? strlen(data_) : 0;
+    // big -O(1)
+    return size_;
+
+    // big -O(n)
+    // return data_ ? strlen(data_) : 0;
 }
 
 void String::initializeFromString(const char *str)
 {
     if (str != nullptr)
     {
-        this->data_ = new char[strlen(str) + 1];
+        size_t str_length = strlen(str);
+        data_ = new char[str_length + 1];
         strcpy(data_, str);
+        size_ = str_length;
     }
     else
     {
-        this->data_ = nullptr;
+        data_ = nullptr;
+        size_ = 0;
     }
 }
 
-void String::initializeFromOther(const String &Other)
+void String::initializeFromOther(const String &other)
 {
-    if (Other.data_ != nullptr)
+    if (other.data_ != nullptr)
     {
-        this->data_ = new char[strlen(Other.data_) + 1];
-        strcpy(data_, Other.data_);
+        size_t other_length = other.size_;
+        data_ = new char[other_length + 1];
+        strcpy(data_, other.data_);
+        size_ = other_length;
     }
     else
     {
-        this->data_ = nullptr;
+        data_ = nullptr;
+        size_ = 0;
     }
 }
 

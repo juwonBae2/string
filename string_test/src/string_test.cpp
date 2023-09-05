@@ -212,22 +212,21 @@ TEST_F(StringTest, emptyFunction)
     std::boolalpha(std::cout);
     PRINTLN("s.empty():{}\t s:{}", s.empty(), s);
     ASSERT_EQ(true, s.empty());
-    ASSERT_EQ(String(), "");
+    ASSERT_EQ(String(), s);
 
     s = "Exemplar";
     PRINTLN("s.empty():{}\t s:{}", s.empty(), s);
     ASSERT_EQ(false, s.empty());
-    ASSERT_EQ(String("Exemplar"), "Exemplar");
+    ASSERT_EQ(String("Exemplar"), s);
 
     s = "";
     PRINTLN("s.empty():{}\t s:{}", s.empty(), s);
     ASSERT_EQ(true, s.empty());
-    ASSERT_EQ(String(), "");
+    ASSERT_EQ(String(), s);
 }
 
 TEST_F(StringTest, popBackFunction)
 {
-
     String str("Short string!");
     std::cout << "before=\"" << str << "\"\n";
     ASSERT_TRUE(str.size() == 13);
@@ -235,22 +234,41 @@ TEST_F(StringTest, popBackFunction)
     str.pop_back();
     std::cout << " after=\"" << str << "\"\n";
     ASSERT_TRUE(str.size() == 12);
+
+    String str2;
+    ASSERT_TRUE(str2.size() == 0);
+
+    str2.pop_back();
+    ASSERT_TRUE(str2.size() == 0);
+}
+
+TEST_F(StringTest, pushBackFunction)
+{
+    String str("Short string");
+    std::cout << "1) " << str << ", size: " << str.size() << '\n';
+    ASSERT_TRUE(str.size() == 12);
+    ASSERT_EQ(String("Short string"), str);
+
+    str.push_back("!");
+    std::cout << "2) " << str << ", size: " << str.size() << '\n';
+    ASSERT_TRUE(str.size() == 13);
+    ASSERT_EQ(String("Short string!"), str);
 }
 
 TEST_F(StringTest, IteratorFunction)
 {
-    GTEST_SKIP();
+    // GTEST_SKIP();
 
     String str = "Hello, World!";
     String result;
-    // ??
-    int i = 0;
 
-    // for (String::Iterator it = str.begin(); it != str.end(); ++it, ++i)
-    // {
-    //     char expectedChar = str.;
-    //     ASSERT_EQ(expectedChar, *it);
-    // }
+    size_t i = 0;
+
+    for (String::Iterator it = str.begin(); it != str.end(); ++it, ++i)
+    {
+        char expectedChar = str.at(i);
+        ASSERT_EQ(expectedChar, *it);
+    }
 
     // String::Iterator iterator = str.begin();
     // String::Iterator strEnd = str.end();
@@ -268,8 +286,11 @@ TEST_F(StringTest, IteratorFunction)
 
 TEST_F(StringTest, originStringIterator)
 {
+    String sample{"abcde"};
+    // sample.at(0)  => a;
+    // sample.data_
+
     std::string input = "abcdefg";
-    input.pop_back();
 
     for (std::string::iterator it = input.begin(); it < input.end(); ++it)
     {
