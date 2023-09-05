@@ -48,9 +48,11 @@ public:
     String reserve();
     String resize();
     String cleer();
+    String capacity();
 
     // TODO: friend 삭제
-    friend std::ostream &operator<<(std::ostream &os, const String &str);
+    friend std::ostream &
+    operator<<(std::ostream &os, const String &str);
 
     size_t size() const;
 
