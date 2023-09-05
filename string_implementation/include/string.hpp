@@ -42,9 +42,9 @@ public:
     bool empty() const;
     void pop_back();
     void push_back(const String &str);
+    char &at(size_t index) const;
 
     // TODO: 추가 함수 구현
-    char &at(size_t index) const;
     String reserve();
     String resize();
     String cleer();
