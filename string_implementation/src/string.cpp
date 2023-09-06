@@ -30,7 +30,7 @@ String::String(const char *str, size_t length)
 
 String::~String()
 {
-    if (this->data_ != nullptr)
+    if (data_ != nullptr)
     {
         delete[] this->data_;
     }
@@ -75,22 +75,22 @@ String &String::operator=(String &&str) noexcept
 
 bool String::operator==(const String &str) const
 {
-    return (strcmp(this->data_, str.data_) == 0);
+    return (strcmp(data_, str.data_) == 0);
 }
 
 bool String::operator!=(const String &str) const
 {
-    return !(strcmp(this->data_, str.data_) == 0);
+    return !(*this == str);
 }
 
 bool String::operator<(const String &str) const
 {
-    return (strcmp(this->data_, str.data_) < 0);
+    return (strcmp(data_, str.data_) < 0);
 }
 
 bool String::operator>(const String &str) const
 {
-    return (strcmp(this->data_, str.data_) > 0);
+    return (strcmp(data_, str.data_) > 0);
 }
 
 String String::operator+(const String &str) const
@@ -132,12 +132,12 @@ String &String::operator+=(const String &str)
 
 char &String::front() const
 {
-    return this->data_[0];
+    return data_[0];
 }
 
 char &String::back() const
 {
-    return this->data_[this->size() - 1];
+    return data_[size_ - 1];
 }
 
 String String::trim() const
@@ -177,8 +177,8 @@ String String::erase(size_t start, size_t count) const
 {
     if (data_ == nullptr)
     {
-        spdlog::error("Null pointer in erase() funtion.");
-        throw std::runtime_error("Null pointer in erase() funtion.");
+        spdlog::error("Null pointer in erase() function.");
+        throw std::runtime_error("Null pointer in erase() function.");
     }
 
     size_t length = strlen(data_);
@@ -186,7 +186,7 @@ String String::erase(size_t start, size_t count) const
     if (start >= length || count == 0)
     {
         spdlog::error("Erase start index or count is out of bounds. Returning original string.");
-        return String(data_);
+        return *this;
     }
 
     if (start + count > length)
@@ -247,8 +247,8 @@ String String::substr(size_t start) const
 {
     if (data_ == nullptr)
     {
-        spdlog::error("Null pointer in substr() funtion.");
-        throw std::runtime_error("Null pointer in substr() funtion.");
+        spdlog::error("Null pointer in substr() function.");
+        throw std::runtime_error("Null pointer in substr() function.");
     }
 
     size_t length = strlen(data_);
@@ -283,8 +283,8 @@ String String::substr(size_t start, size_t count) const
 {
     if (data_ == nullptr)
     {
-        spdlog::error("Null pointer in substr() funtion.");
-        throw std::runtime_error("Null pointer in substr() funtion.");
+        spdlog::error("Null pointer in substr() function.");
+        throw std::runtime_error("Null pointer in substr() function.");
     }
 
     size_t length = strlen(data_);
@@ -327,13 +327,13 @@ void String::pop_back()
 {
     if (empty())
     {
-        spdlog::info("string::pop_back(): string is already empty");
+        spdlog::info("String::pop_back(): string is already empty");
     }
     else
     {
-        char *newChar = new char[size()];
+        char *newChar = new char[size_];
 
-        for (size_t i = 0; i < size() - 1; ++i)
+        for (size_t i = 0; i < size_ - 1; ++i)
         {
             newChar[i] = data_[i];
         }
@@ -341,10 +341,11 @@ void String::pop_back()
         delete[] data_;
         data_ = newChar;
 
-        size_ = size() - 1;
+        size_ = size_ - 1;
     }
 }
 
+// TODO: capacity 추가로 인해 개선 해야 됨
 void String::push_back(const String &str)
 {
     size_t totalSize = size_ + str.size_;
@@ -384,7 +385,7 @@ std::ostream &operator<<(std::ostream &os, const String &str)
     return os;
 }
 
-size_t String::size() const
+size_t String::size() const noexcept
 {
     // big -O(1)
     return size_;
@@ -392,6 +393,16 @@ size_t String::size() const
     // big -O(n)
     // return data_ ? strlen(data_) : 0;
 }
+
+size_t String::length() const noexcept
+{
+    return size();
+}
+
+// size_t String::capacity() const noexcept
+// {
+//     return capacity_;
+// }
 
 void String::initializeFromString(const char *str)
 {
@@ -467,5 +478,5 @@ String::Iterator String::begin()
 
 String::Iterator String::end()
 {
-    return String::Iterator(data_ + size());
+    return String::Iterator(data_ + size_);
 }

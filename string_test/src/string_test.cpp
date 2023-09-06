@@ -192,7 +192,7 @@ TEST_F(StringTest, FindFunction)
     ASSERT_EQ(String(), found4);
 }
 
-TEST_F(StringTest, substrFunction)
+TEST_F(StringTest, SubstrFunction)
 {
     String a = "0123456789abcdefghij";
 
@@ -206,7 +206,7 @@ TEST_F(StringTest, substrFunction)
     ASSERT_EQ(String("hij"), substr3);
 }
 
-TEST_F(StringTest, emptyFunction)
+TEST_F(StringTest, EmptyFunction)
 {
     String s;
     std::boolalpha(std::cout);
@@ -225,7 +225,7 @@ TEST_F(StringTest, emptyFunction)
     ASSERT_EQ(String(), s);
 }
 
-TEST_F(StringTest, popBackFunction)
+TEST_F(StringTest, PopBackFunction)
 {
     String str("Short string!");
     std::cout << "before=\"" << str << "\"\n";
@@ -242,32 +242,41 @@ TEST_F(StringTest, popBackFunction)
     ASSERT_TRUE(str2.size() == 0);
 }
 
-TEST_F(StringTest, pushBackFunction)
+TEST_F(StringTest, PushBackFunction)
 {
     String str("Short string");
-    std::cout << "1) " << str << ", size: " << str.size() << '\n';
+    std::cout << "1) " << str << "\n   Size: " << str.size() << '\n'
+              << std::endl;
     ASSERT_TRUE(str.size() == 12);
     ASSERT_EQ(String("Short string"), str);
 
     str.push_back("!");
-    std::cout << "2) " << str << ", size: " << str.size() << '\n';
+    std::cout << "2) " << str << "\n   Size: " << str.size() << '\n';
     ASSERT_TRUE(str.size() == 13);
     ASSERT_EQ(String("Short string!"), str);
 }
 
-TEST_F(StringTest, atFunction)
+TEST_F(StringTest, AtFunction)
 {
     String s("message");
-    ASSERT_EQ('e', s.at(2));
+    s = "abc";
+    s.at(2) = 'x';
+    ASSERT_EQ('x', s.at(2));
+    ASSERT_TRUE(s.size() == 3);
+
+    try
+    {
+        s.at(3) = 'x';
+    }
+    catch (std::out_of_range const &exc)
+    {
+        std::cout << exc.what() << '\n';
+    }
 }
 
 TEST_F(StringTest, IteratorFunction)
 {
-    // GTEST_SKIP();
-
-    String str = "Hello, World!";
-    String result;
-
+    String str = "abcdefg";
     size_t i = 0;
 
     for (String::Iterator it = str.begin(); it != str.end(); ++it, ++i)
@@ -275,34 +284,17 @@ TEST_F(StringTest, IteratorFunction)
         char expectedChar = str.at(i);
         ASSERT_EQ(expectedChar, *it);
     }
-
-    // String::Iterator iterator = str.begin();
-    // String::Iterator strEnd = str.end();
-
-    // String result;
-
-    // while (iterator != strEnd)
-    // {
-    //     // result += *iterator;
-    //     ++iterator;
-    // }
-
-    // ASSERT_EQ(str, result);
 }
 
-TEST_F(StringTest, originStringIterator)
+TEST_F(StringTest, OriginalStringIteratorFunction)
 {
-    String sample{"abcde"};
-    // sample.at(0)  => a;
-    // sample.data_
+    std::string str = "abcdefg";
+    size_t i = 0;
 
-    std::string input = "abcdefg";
-
-    for (std::string::iterator it = input.begin(); it < input.end(); ++it)
+    for (std::string::iterator it = str.begin(); it < str.end(); ++it, ++i)
     {
-        char expectedChar = *it;
-        char actualChar = *it;
-        ASSERT_EQ(expectedChar, actualChar);
+        char expectedChar = str.at(i);
+        ASSERT_EQ(expectedChar, *it);
     }
 }
 

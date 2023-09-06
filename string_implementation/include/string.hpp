@@ -45,16 +45,18 @@ public:
     char &at(size_t index) const;
 
     // TODO: 추가 함수 구현
-    String reserve();
+    void reserve(size_t resize) const noexcept;
     String resize();
     String cleer();
-    String capacity();
 
     // TODO: friend 삭제
-    friend std::ostream &
-    operator<<(std::ostream &os, const String &str);
+    friend std::ostream &operator<<(std::ostream &os, const String &str);
 
-    size_t size() const;
+    size_t size() const noexcept;
+    size_t length() const noexcept;
+
+    // TODO: capacity 함수 구현
+    size_t capacity() const noexcept;
 
     class Iterator;
     Iterator begin();
@@ -68,6 +70,7 @@ public:
 private:
     char *data_;
     size_t size_;
+    size_t capacity_;
 
     void initializeFromString(const char *str);
     void initializeFromOther(const String &other);
