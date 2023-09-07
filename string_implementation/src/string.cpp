@@ -1,5 +1,11 @@
 #include "string.hpp"
 #include <spdlog/spdlog.h>
+#include <memory>
+
+// String::String() : data_(std::make_unique<char[]>(1)), size_(0)
+// {
+//     data_[0] = '\0';
+// }
 
 String::String() : data_(new char[1]), size_(0)
 {
@@ -345,7 +351,6 @@ void String::pop_back()
     }
 }
 
-// TODO: capacity 추가로 인해 개선 해야 됨
 void String::push_back(const String &str)
 {
     size_t totalSize = size_ + str.size_;

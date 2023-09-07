@@ -68,6 +68,7 @@ public:
     class Nops;
 
 private:
+    // std::unique_ptr<char[]> data_;
     char *data_;
     size_t size_;
     size_t capacity_;
