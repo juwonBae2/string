@@ -377,9 +377,19 @@ char &String::at(size_t index) const
     return this->data_[index];
 }
 
+void String::clear() noexcept
+{
+    if (data_ != nullptr)
+    {
+        delete[] data_;
+        data_ = nullptr;
+    }
+
+    size_ = 0;
+}
+
 // String String::reserve();
 // String String::resize();
-// String String::cleer();
 
 std::ostream &operator<<(std::ostream &os, const String &str)
 {

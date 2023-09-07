@@ -43,11 +43,11 @@ public:
     void pop_back();
     void push_back(const String &str);
     char &at(size_t index) const;
+    void clear() noexcept;
 
     // TODO: 추가 함수 구현
     void reserve(size_t resize) const noexcept;
     String resize();
-    String cleer();
 
     // TODO: friend 삭제
     friend std::ostream &operator<<(std::ostream &os, const String &str);

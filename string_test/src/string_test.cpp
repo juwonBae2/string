@@ -274,6 +274,15 @@ TEST_F(StringTest, AtFunction)
     }
 }
 
+TEST_F(StringTest, ClearFunction)
+{
+    String s("Exemplar");
+    s.clear();
+
+    ASSERT_TRUE(s.empty());
+    ASSERT_EQ(s.size(), 0);
+}
+
 TEST_F(StringTest, IteratorFunction)
 {
     String str = "abcdefg";
