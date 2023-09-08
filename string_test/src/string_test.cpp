@@ -264,13 +264,12 @@ TEST_F(StringTest, PopBackFunction)
 TEST_F(StringTest, PushBackFunction)
 {
     String str("Short string");
-    std::cout << "1) " << str << "\n   Size: " << str.size() << '\n'
-              << std::endl;
+    std::cout << "1) " << str << " (Size: " << str.size() << ")" << '\n';
     ASSERT_EQ(str.size(), 12);
     ASSERT_EQ(String("Short string"), str);
 
     str.push_back("!");
-    std::cout << "2) " << str << "\n   Size: " << str.size() << '\n';
+    std::cout << "2) " << str << " (Size: " << str.size() << ")" << '\n';
     ASSERT_EQ(str.size(), 13);
     ASSERT_EQ(String("Short string!"), str);
 }
