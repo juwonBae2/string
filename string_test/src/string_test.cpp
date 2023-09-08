@@ -281,6 +281,12 @@ TEST_F(StringTest, ClearFunction)
 
     ASSERT_TRUE(s.empty());
     ASSERT_EQ(s.size(), 0);
+
+    String s2;
+    s2.clear();
+
+    ASSERT_TRUE(s2.empty());
+    ASSERT_EQ(s2.size(), 0);
 }
 
 TEST_F(StringTest, IteratorFunction)
