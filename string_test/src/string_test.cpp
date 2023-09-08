@@ -248,17 +248,17 @@ TEST_F(StringTest, PopBackFunction)
 {
     String str("Short string!");
     std::cout << "before=\"" << str << "\"\n";
-    ASSERT_TRUE(str.size() == 13);
+    ASSERT_EQ(str.size(), 13);
 
     str.pop_back();
     std::cout << " after=\"" << str << "\"\n";
-    ASSERT_TRUE(str.size() == 12);
+    ASSERT_EQ(str.size(), 12);
 
     String str2;
-    ASSERT_TRUE(str2.size() == 0);
+    ASSERT_EQ(str2.size(), 0);
 
     str2.pop_back();
-    ASSERT_TRUE(str2.size() == 0);
+    ASSERT_EQ(str2.size(), 0);
 }
 
 TEST_F(StringTest, PushBackFunction)
@@ -266,12 +266,12 @@ TEST_F(StringTest, PushBackFunction)
     String str("Short string");
     std::cout << "1) " << str << "\n   Size: " << str.size() << '\n'
               << std::endl;
-    ASSERT_TRUE(str.size() == 12);
+    ASSERT_EQ(str.size(), 12);
     ASSERT_EQ(String("Short string"), str);
 
     str.push_back("!");
     std::cout << "2) " << str << "\n   Size: " << str.size() << '\n';
-    ASSERT_TRUE(str.size() == 13);
+    ASSERT_EQ(str.size(), 13);
     ASSERT_EQ(String("Short string!"), str);
 }
 
@@ -281,7 +281,7 @@ TEST_F(StringTest, AtFunction)
     s = "abc";
     s.at(2) = 'x';
     ASSERT_EQ('x', s.at(2));
-    ASSERT_TRUE(s.size() == 3);
+    ASSERT_EQ(s.size(), 3);
 
     try
     {
