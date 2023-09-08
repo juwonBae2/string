@@ -24,7 +24,9 @@ public:
     bool operator==(const String &str) const;
     bool operator!=(const String &str) const;
     bool operator<(const String &str) const;
+    bool operator<=(const String &str) const;
     bool operator>(const String &str) const;
+    bool operator>=(const String &str) const;
 
     String operator+(const String &str) const;
     String &operator+=(const String &str);
@@ -48,6 +50,7 @@ public:
     // TODO: 추가 함수 구현
     void reserve(size_t resize) const noexcept;
     String resize();
+    size_t capacity() const noexcept;
 
     // TODO: friend 삭제
     friend std::ostream &operator<<(std::ostream &os, const String &str);
@@ -55,17 +58,13 @@ public:
     size_t size() const noexcept;
     size_t length() const noexcept;
 
-    // TODO: capacity 함수 구현
-    size_t capacity() const noexcept;
-
     class Iterator;
     Iterator begin();
     Iterator end();
 
-    // String::size_type 구현
-    // String::Npos 구현
+    // TODO: size_type, npos 구현
     class size_type;
-    class Nops;
+    class npos;
 
 private:
     // std::unique_ptr<char[]> data_;
@@ -86,19 +85,12 @@ private:
 //     return os;
 // }
 
-// Member types
-
 // TODO: 사이트처럼 파일 분리 (https://en.cppreference.com/w/cpp/string)
-// TODO: String::iterator 구현
-// ex) for( String::iterator sample; sample.begin() < sample.end(); ++sample)
-// String::size_type 구현
-// String::Npos 구현
-
 class String::size_type
 {
 };
 
-class String::Nops
+class String::npos
 {
 };
 
@@ -120,6 +112,10 @@ public:
 
     bool operator==(const Iterator &other) const;
     bool operator!=(const Iterator &other) const;
+    bool operator<(const Iterator &other) const;
+    bool operator<=(const Iterator &other) const;
+    bool operator>(const Iterator &other) const;
+    bool operator>=(const Iterator &other) const;
 
 private:
     pointer ptr_;

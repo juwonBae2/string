@@ -142,6 +142,25 @@ TEST_F(StringTest, TrimFunction)
 // TODO: iterator 구현이 완료 되면 begin, end, find 까지 합쳐 통합 테스트 코드 작성
 TEST_F(StringTest, EraseFunction)
 {
+    // origin
+    // String s = "This Is An Example";
+    // std::cout << "1) " << s << '\n';
+
+    // s.erase(7, 3);
+    // std::cout << "2) " << s << '\n';
+
+    // // s.erase(std::find(s.begin(), s.end(), ' '));
+    // std::cout << "3) " << s << '\n';
+
+    // // s.erase(s.find(' '));
+    // std::cout << "4) " << s << '\n';
+
+    // auto it = std::next(s.begin(), s.find('s'));
+    // s.erase(it, std::next(it, 2));
+    // std::cout << "5) " << s << '\n';
+
+    //==================================================//
+
     // str lenght = 13
     String str = "Hello, World!";
 
@@ -294,7 +313,7 @@ TEST_F(StringTest, IteratorFunction)
     String str = "abcdefg";
     size_t i = 0;
 
-    for (String::Iterator it = str.begin(); it != str.end(); ++it, ++i)
+    for (String::Iterator it = str.begin(); it < str.end(); ++it, ++i)
     {
         char expectedChar = str.at(i);
         ASSERT_EQ(expectedChar, *it);

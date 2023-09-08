@@ -94,9 +94,19 @@ bool String::operator<(const String &str) const
     return (strcmp(data_, str.data_) < 0);
 }
 
+bool String::operator<=(const String &str) const
+{
+    return (strcmp(data_, str.data_) <= 0);
+}
+
 bool String::operator>(const String &str) const
 {
     return (strcmp(data_, str.data_) > 0);
+}
+
+bool String::operator>=(const String &str) const
+{
+    return (strcmp(data_, str.data_) >= 0);
 }
 
 String String::operator+(const String &str) const
@@ -484,6 +494,26 @@ bool String::Iterator::operator==(const Iterator &other) const
 bool String::Iterator::operator!=(const Iterator &other) const
 {
     return ptr_ != other.ptr_;
+}
+
+bool String::Iterator::operator<(const Iterator &other) const
+{
+    return ptr_ < other.ptr_;
+}
+
+bool String::Iterator::operator<=(const Iterator &other) const
+{
+    return ptr_ <= other.ptr_;
+}
+
+bool String::Iterator::operator>(const Iterator &other) const
+{
+    return ptr_ > other.ptr_;
+}
+
+bool String::Iterator::operator>=(const Iterator &other) const
+{
+    return ptr_ >= other.ptr_;
 }
 
 String::Iterator String::begin()
