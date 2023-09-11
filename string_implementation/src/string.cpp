@@ -7,10 +7,7 @@
 //     data_[0] = '\0';
 // }
 
-String::String() : data_(new char[1]), size_(0)
-{
-    data_[0] = '\0';
-}
+String::String() : data_(new char[1]{'\0'}), size_(0), capacity_(1) {}
 
 String::String(const char *str)
 {
@@ -45,13 +42,15 @@ String::~String()
 String::String(const String &str)
 {
     initializeFromOther(str);
+    capacity_ = str.capacity_;
 }
 
 // TODO: Add test code
-String::String(String &&str) noexcept : data_(str.data_), size_(str.size_)
+String::String(String &&str) noexcept : data_(str.data_), size_(str.size_), capacity_(str.capacity_)
 {
     str.data_ = nullptr;
     str.size_ = 0;
+    str.capacity_ = 0;
 }
 
 String &String::operator=(const String &str)
@@ -398,7 +397,21 @@ void String::clear() noexcept
     size_ = 0;
 }
 
-// String String::reserve();
+void String::reserve(size_t new_cap) noexcept
+{
+    if (new_cap > capacity_)
+    {
+        char *new_data = new char[new_cap];
+        if (data_)
+        {
+            std::copy(data_, data_ + size_, new_data);
+            delete[] data_;
+        }
+        data_ = new_data;
+        capacity_ = new_cap;
+    }
+}
+
 // String String::resize();
 
 std::ostream &operator<<(std::ostream &os, const String &str)
@@ -424,10 +437,10 @@ size_t String::length() const noexcept
     return size();
 }
 
-// size_t String::capacity() const noexcept
-// {
-//     return capacity_;
-// }
+size_t String::capacity() const noexcept
+{
+    return capacity_;
+}
 
 void String::initializeFromString(const char *str)
 {
@@ -442,6 +455,7 @@ void String::initializeFromString(const char *str)
     {
         data_ = nullptr;
         size_ = 0;
+        capacity_ = 1;
     }
 }
 
@@ -449,15 +463,16 @@ void String::initializeFromOther(const String &other)
 {
     if (other.data_ != nullptr)
     {
-        size_t other_length = other.size_;
-        data_ = new char[other_length + 1];
+        size_ = other.size_;
+        capacity_ = other.capacity_;
+        data_ = new char[capacity_];
         strcpy(data_, other.data_);
-        size_ = other_length;
     }
     else
     {
         data_ = nullptr;
         size_ = 0;
+        capacity_ = 1;
     }
 }
 

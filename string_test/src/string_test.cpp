@@ -307,6 +307,14 @@ TEST_F(StringTest, ClearFunction)
     ASSERT_EQ(s2.size(), 0);
 }
 
+TEST_F(StringTest, ReserveFunction)
+{
+    String s;
+    std::cout << "Before: " << s.capacity() << '\n';
+
+    GTEST_SKIP();
+}
+
 TEST_F(StringTest, IteratorFunction)
 {
     String str = "abcdefg";

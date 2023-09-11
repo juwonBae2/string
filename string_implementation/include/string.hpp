@@ -48,15 +48,15 @@ public:
     void clear() noexcept;
 
     // TODO: 추가 함수 구현
-    void reserve(size_t resize) const noexcept;
+    void reserve(size_t new_cap) noexcept;
     String resize();
-    size_t capacity() const noexcept;
 
     // TODO: friend 삭제
     friend std::ostream &operator<<(std::ostream &os, const String &str);
 
     size_t size() const noexcept;
     size_t length() const noexcept;
+    size_t capacity() const noexcept;
 
     class Iterator;
     Iterator begin();
